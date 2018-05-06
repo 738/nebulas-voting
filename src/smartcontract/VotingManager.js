@@ -1,6 +1,6 @@
 "use strict";
 
-// id: number, title: string, choice: Array<[string, Array<string>]>, author: string
+// id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string
 var VotingItem = function(item) {
     if (item) {
         var obj = JSON.parse(item);
@@ -8,10 +8,12 @@ var VotingItem = function(item) {
         this.title = obj.title;
         this.choices = obj.choices;
         this.author = obj.author;
+        this.address = obj.address;
     } else {
         this.title = '';
         this.choices = [];
         this.author = '';
+        this.address = '';
     }
 };
 
@@ -45,14 +47,18 @@ VotingManager.prototype = {
         var votingItem = this.votingItemRepo.get(id);
         if (votingItem) throw new Error("Voting Item has been occupied");
 
+        var address = Blockchain.transaction.from;
         votingItem = new VotingItem();
         votingItem.id = id;
-        votingItem.author = author || Blockchain.transaction.from;
         votingItem.title = title;
+        votingItem.author = author || address;
+        votingItem.address = address;
+
         // [['AAA', []], ['BBB', []], ['CCC', []]] 형식으로 저장
         var choicesWithNumber = [];
         for(var choice of choicesParsed) choicesWithNumber.push([choice, []]);
         votingItem.choices = choicesWithNumber;
+
         LocalContractStorage.put(maxId, votingItem.id);
         this.votingItemRepo.put(id, votingItem);
         return votingItem;
