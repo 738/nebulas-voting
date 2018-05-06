@@ -26,12 +26,12 @@ var VotingManager = function () {
         parse: function (item) {
             return new VotingItem(item);
         },
-        stringify: function (o) {
-            return o.toString();
+        stringify: function (obj) {
+            return obj.toString();
         },
     });
 };
-
+const maxId = 'MAXID';
 VotingManager.prototype = {
     init: function() {},
 
@@ -39,7 +39,7 @@ VotingManager.prototype = {
         if (title === '' || choice.length === 0) throw new Error("empty title or choice");
         if (title.length > 64) throw new Error("title exceed limit length");
 
-        var id = this.votingItemRepo.get('MAXID') ? this.votingItemRepo.get('MAXID') + 1 : 1;
+        var id = LocalContractStorage.get(maxId) ? LocalContractStorage.get(maxId) + 1 : 1;
         var author = Blockchain.transaction.from;
 
         var votingItem = this.votingItemRepo.get(id);
@@ -50,7 +50,7 @@ VotingManager.prototype = {
         votingItem.author = author;
         votingItem.title = title;
         votingItem.choice = choice;
-        this.votingItemRepo.put('MAXID', votingItem.id);
+        LocalContractStorage.put(maxId, votingItem.id);
         this.votingItemRepo.put(id, votingItem);
         return votingItem;
     },
