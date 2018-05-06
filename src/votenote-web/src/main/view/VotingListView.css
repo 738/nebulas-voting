@@ -1,0 +1,9 @@
+.VotingListView-root {
+    width: '100%';
+    margin-top: 3;
+    overflow-x: 'auto';
+}
+
+.VotingListView-table {
+    min-width: 700;
+}

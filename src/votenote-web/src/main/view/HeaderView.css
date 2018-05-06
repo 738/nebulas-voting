@@ -1,0 +1,10 @@
+.HeaderView-Container {
+    background-color: #222;
+    height: 50px;
+    padding: 20px;
+    color: white;
+}
+
+.HeaderView-title {
+    font-size: 3em;
+}
