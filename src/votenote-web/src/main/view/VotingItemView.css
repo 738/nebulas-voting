@@ -1,5 +1,5 @@
 .VotingItemView-Container {
-    
+    display: block;
 }
 
 .VotingItemView-id {
@@ -11,6 +11,13 @@
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
     padding-top: 15px;
     font-size: 1.5em;
+    cursor: pointer;
+}
+.VotingItemView-id:hover {
+    background-color: #FFF3E0;
+}
+.VotingItemView-id:active {
+    background-color: #FFE0B2;
 }
 
 .VotingItemView-title {
@@ -22,6 +29,13 @@
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
     padding-top: 15px;
     font-size: 1.5em;
+    cursor: pointer;
+}
+.VotingItemView-title:hover {
+    background-color: #FFF3E0;
+}
+.VotingItemView-title:active {
+    background-color: #FFE0B2;
 }
 
 .VotingItemView-author {
@@ -33,4 +47,11 @@
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
     padding-top: 15px;
     font-size: 1.5em;
+    cursor: pointer;
+}
+.VotingItemView-author:hover {
+    background-color: #FFF3E0;
+}
+.VotingItemView-author:active {
+    background-color: #FFE0B2;
 }

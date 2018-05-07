@@ -1,0 +1,63 @@
+.EnrollView-Container {
+    display: inline-block;
+    width: 800px;
+}
+
+.EnrollView-title {
+    text-align: left;
+}
+
+.EnrollView-form {
+    float: left;
+    text-align: center;
+
+}
+
+.EnrollView-label {
+    display: inline-block;   
+    margin-right: 20px;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.EnrollView-input {
+    font-size: 2em;
+}
+
+.EnrollView-add-choices-button {
+    display: inline-block;
+    text-align: center;
+    width: 50px;
+    height: 40px;
+    background-color: white;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    font-size: 1.5em;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.EnrollView-back-button {
+    float: right;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+    background-color: #FFFDE7;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.EnrollView-submit-button {
+    float: right;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+    background-color: #FFCCBC;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
