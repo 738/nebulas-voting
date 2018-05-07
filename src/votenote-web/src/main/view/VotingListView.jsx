@@ -3,6 +3,7 @@ import './VotingListView.css';
 import VotingItemView from './VotingItemView';
 import { Link } from 'react-router-dom';
 import SimpleButton from '../../common/SimpleButton';
+import { dappAddress } from '../../config';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -13,8 +14,6 @@ class VotingListView extends Component {
         }
     }
 
-    dappAddress = "n22db3WJchN6sWSnKK2AnuzxMj5BCAgUUp4";
-
     componentDidMount() {
         this.fetchVotingList();
     }
@@ -24,7 +23,7 @@ class VotingListView extends Component {
         window.postMessage({
             "target": "contentscript",
             "data": {
-                "to": this.dappAddress,
+                "to": dappAddress,
                 "value": "0",
                 "contract": {
                     "function": func,

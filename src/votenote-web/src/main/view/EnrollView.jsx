@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import './EnrollView.css';
 import SimpleButton from '../../common/SimpleButton';
+import { dappAddress } from '../../config';
 
 class EnrollView extends Component {
     constructor(props) {
@@ -12,7 +13,6 @@ class EnrollView extends Component {
             choices: [''],
         }
     }
-    dappAddress = "n22db3WJchN6sWSnKK2AnuzxMj5BCAgUUp4";
     MAX_CHOICE = 5;
 
     onSubmitButtonClicked() {
@@ -25,7 +25,7 @@ class EnrollView extends Component {
         window.postMessage({
             "target": "contentscript",
             "data": {
-                "to": this.dappAddress,
+                "to": dappAddress,
                 "value": "0",
                 "contract": {
                     "function": func,

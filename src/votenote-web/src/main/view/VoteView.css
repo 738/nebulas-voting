@@ -17,6 +17,21 @@
     font-size: 1.5em;
 }
 
+.VoteView-vote-button {
+    display: inline-block;
+    background-color: #FFCCBC;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding: 10px 30px;
+    margin: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.VoteView-voted {
+    font-size: 2em;
+    color: red;
+}
+
 .VoteView-loading {
     font-size: 3em;
     margin-top: 20px;
