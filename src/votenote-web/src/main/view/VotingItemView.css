@@ -3,13 +3,34 @@
 }
 
 .VotingItemView-id {
-    display: inline-block!important;
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-color: white;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
 }
 
 .VotingItemView-title {
-    display: inline-block!important;
+    display: inline-block;
+    width: 500px;
+    height: 40px;
+    background-color: white;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
 }
 
 .VotingItemView-author {
-    display: inline-block!important;
+    display: inline-block;
+    width: 500px;
+    height: 40px;
+    background-color: white;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
 }

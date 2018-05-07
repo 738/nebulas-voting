@@ -1,9 +1,19 @@
-.VotingListView-root {
-    width: '100%';
-    margin-top: 3;
-    overflow-x: 'auto';
+.VotingListView-Container {
+    display: inline-block;
 }
 
-.VotingListView-table {
-    min-width: 700;
+.VotingListView-title {
+    text-align: left;
+}
+
+.VotingListView-enroll-button {
+    display: block;
+    float: right;
+    width: 200px;
+    height: 40px;
+    background-color: white;
+    margin: 5px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    padding-top: 15px;
+    font-size: 1.5em;
 }
