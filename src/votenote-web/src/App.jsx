@@ -24,6 +24,7 @@ class App extends Component {
           <HeaderView title="Vote Note"></HeaderView>
           
         <Switch>
+          <Route exact={true} path="/" component={VotingListView}/>
           <Route path="/votinglist" component={VotingListView}/>
           <Route path="/enroll" component={EnrollView} />
           <Route path="/vote/:id" component={VoteView} />

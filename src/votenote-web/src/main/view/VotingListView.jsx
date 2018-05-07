@@ -61,14 +61,20 @@ class VotingListView extends Component {
                 { !this.state.isLoading ?
                     <div>
                         <h1 className="VotingListView-title">Voting List</h1>
-                        <VotingItemView votingItem={{ id: 'id', title: 'title', author: 'author' }}></VotingItemView>
+                        <h3 className="VotingListView-title">- You can only vote once at one voting</h3>
+                        <h3 className="VotingListView-title">- Developed by <a href="https://github.com/JonJee/nebulas-voting">Jon Jee</a> (Korea)</h3>
+                        <h3 className="VotingListView-title">- Blockchain Powered by Nebulas</h3>
+                        <h3 className="VotingListView-title">- This is Testnet</h3>
+                        <VotingItemView isTableHead={true}></VotingItemView>
                         { this.state.votingItems && this.state.votingItems.map((item, index) =>
                             <VotingItemView key={index} votingItem={item}></VotingItemView>
                         )}
                         <SimpleButton color="#FFCCBC"><Link to="/enroll">enroll</Link></SimpleButton>
                     </div>
                     :
-                    <div className="VotingListView-loading">Loading...</div>
+                    <div className="VotingListView-loading">Loading... 
+                        <div style={{fontSize: '15px'}}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Testnet</div>
+                    </div>
                 }
             </div>
         );
