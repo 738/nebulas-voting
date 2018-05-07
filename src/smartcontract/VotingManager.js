@@ -72,13 +72,13 @@ VotingManager.prototype = {
 
     getVotingList: function() {
         var id = LocalContractStorage.get(maxId);
-        if (!id) throw new Error("There is no voting item");
-        var votingList = [];
+        var votingLists = [];
+        if (!id) return votingLists;
         for (var i = 1; i <= id; i++) {
             var votingItem = this.get(i);
-            if (votingItem !== undefined) votingList.push(votingItem);
+            if (votingItem !== undefined) votingLists.push(votingItem);
         }
-        return votingList;
+        return votingLists;
     },
 
     vote: function(id, index) {

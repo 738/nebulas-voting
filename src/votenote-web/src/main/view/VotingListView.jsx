@@ -65,8 +65,8 @@ class VotingListView extends Component {
                         <div className="VotingListView-description">
                         - You can only vote once at one voting<br/>
                         - Developed by <a href="https://github.com/JonJee">Jon Jee</a> (Korea)<br/>
-                        - Blockchain Powered by Nebulas<br/>
-                        - This is Testnet<br/>
+                        - Blockchain Powered by Nebulas (This is Testnet)<br/>
+                        - Transaction is confirmed in 15 seconds<br/>
                         </div>
                         <img src={logo} width="100px"/>
                         <VotingItemView isTableHead={true}></VotingItemView>
