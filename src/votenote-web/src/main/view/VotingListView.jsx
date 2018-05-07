@@ -4,6 +4,7 @@ import VotingItemView from './VotingItemView';
 import { Link } from 'react-router-dom';
 import SimpleButton from '../../common/SimpleButton';
 import { dappAddress } from '../../config';
+import logo from '../../img/logo.png';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -61,10 +62,13 @@ class VotingListView extends Component {
                 { !this.state.isLoading ?
                     <div>
                         <h1 className="VotingListView-title">Voting List</h1>
-                        <h3 className="VotingListView-title">- You can only vote once at one voting</h3>
-                        <h3 className="VotingListView-title">- Developed by <a href="https://github.com/JonJee/nebulas-voting">Jon Jee</a> (Korea)</h3>
-                        <h3 className="VotingListView-title">- Blockchain Powered by Nebulas</h3>
-                        <h3 className="VotingListView-title">- This is Testnet</h3>
+                        <div className="VotingListView-description">
+                        - You can only vote once at one voting<br/>
+                        - Developed by <a href="https://github.com/JonJee">Jon Jee</a> (Korea)<br/>
+                        - Blockchain Powered by Nebulas<br/>
+                        - This is Testnet<br/>
+                        </div>
+                        <img src={logo} width="100px"/>
                         <VotingItemView isTableHead={true}></VotingItemView>
                         { this.state.votingItems && this.state.votingItems.map((item, index) =>
                             <VotingItemView key={index} votingItem={item}></VotingItemView>
