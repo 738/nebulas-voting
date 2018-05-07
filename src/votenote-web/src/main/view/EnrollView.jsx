@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import './EnrollView.css';
+import SimpleButton from '../../common/SimpleButton';
 
 class EnrollView extends Component {
     constructor(props) {
@@ -8,15 +9,19 @@ class EnrollView extends Component {
         this.state = {
             title: '',
             author: '',
-            choices: '',
+            choices: [''],
         }
     }
     dappAddress = "n22db3WJchN6sWSnKK2AnuzxMj5BCAgUUp4";
+    MAX_CHOICE = 5;
 
     onSubmitButtonClicked() {
-        console.log("********* call smart contract \"sendTransaction\" *****************");
+        if (this.state.title === '' || this.state.author === '' || this.state.choices.some(value => !value)) {
+            alert('fill the field');
+            return;
+        }
         var func = "enroll";
-        var args = `[\"${this.state.title}\", \"${this.state.choices}\", \"${this.state.author}\"]`;
+        var args = `[\"${this.state.title}\", \"${this.state.choices.join('|')}\", \"${this.state.author}\"]`;
         window.postMessage({
             "target": "contentscript",
             "data": {
@@ -29,11 +34,10 @@ class EnrollView extends Component {
             },
             "method": "neb_sendTransaction"
         }, "*");
-        console.log(this.context.history);
     }
 
     onBackButtonClicked() {
-
+        
     }
 
     onTitleChanged(e) {
@@ -50,10 +54,27 @@ class EnrollView extends Component {
         });
     }
 
-    onChoicesChanged(e) {
+    onChoicesChanged(index, e) {
+        var tempChoices = this.state.choices;
+        tempChoices[index] = e.target.value;
+        console.log(tempChoices[index])
         this.setState({
             ...this.state,
-            choices: e.target.value,
+            choices: tempChoices,
+        });
+    }
+
+    onAddButtonClicked() {
+        if (this.state.choices.length >= this.MAX_CHOICE) {
+            alert('cannot add more than 5')
+            return;
+        }
+        this.setState({
+            ...this.state,
+            choices: [
+                ...this.state.choices,
+                ''
+            ],
         });
     }
 
@@ -65,16 +86,24 @@ class EnrollView extends Component {
                     <div className="EnrollView-label">Title</div>
                     <input className="EnrollView-input" type="text" maxLength="64" size="40" value={this.state.title} onChange={this.onTitleChanged.bind(this)}></input>
                     <br></br>
+
                     <div className="EnrollView-label">Author</div>
                     <input className="EnrollView-input" type="text" maxLength="35" size="40" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
                     <br></br>
-                    <div className="EnrollView-label">Choice #1</div>
-                    <input className="EnrollView-input" type="text" maxLength="32" size="40" value={this.state.choices} onChange={this.onChoicesChanged.bind(this)}></input>
+
+                    { this.state.choices.map((choice, index) =>
+                        <div key={index}>
+                            <div className="EnrollView-label">Choice #{index + 1}</div>
+                            <input className="EnrollView-input" type="text" maxLength="32" size="40" value={choice} onChange={(e) => { this.onChoicesChanged(index, e) }}></input>
+                            <br></br>
+                        </div>
+                    )}
+
+                    <div className="EnrollView-add-choices-button" onClick={this.onAddButtonClicked.bind(this)}>+</div>
                     <br></br>
-                    <div className="EnrollView-add-choices-button">+</div>
-                    <br></br>
-                    <div className="EnrollView-submit-button" onClick={this.onSubmitButtonClicked.bind(this)}>submit</div>
-                    <div className="EnrollView-back-button" onClick={this.onBackButtonClicked.bind(this)}><Link to="/votinglist">back</Link></div>
+
+                    <SimpleButton color="#FFCCBC" onClick={this.onSubmitButtonClicked.bind(this)}>submit</SimpleButton>
+                    <SimpleButton color="#FFFDE7" onClick={this.onBackButtonClicked.bind(this)}><Link to="/votinglist">back</Link></SimpleButton>
                 </div>
             </div>
         );

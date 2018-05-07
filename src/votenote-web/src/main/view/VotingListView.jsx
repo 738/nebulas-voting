@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './VotingListView.css';
 import VotingItemView from './VotingItemView';
 import { Link } from 'react-router-dom';
+import SimpleButton from '../../common/SimpleButton';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -62,10 +63,10 @@ class VotingListView extends Component {
                     <div>
                         <h1 className="VotingListView-title">Voting List</h1>
                         <VotingItemView votingItem={{ id: 'id', title: 'title', author: 'author' }}></VotingItemView>
-                        { this.state.votingItems.map((item, index) =>
+                        { this.state.votingItems && this.state.votingItems.map((item, index) =>
                             <VotingItemView key={index} votingItem={item}></VotingItemView>
                         )}
-                        <div className="VotingListView-enroll-button"><Link to="/enroll">enroll</Link></div>
+                        <SimpleButton color="#FFCCBC"><Link to="/enroll">enroll</Link></SimpleButton>
                     </div>
                     :
                     <div className="VotingListView-loading">Loading...</div>

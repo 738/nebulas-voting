@@ -6,17 +6,6 @@
     text-align: left;
 }
 
-.VotingListView-enroll-button {
-    float: right;
-    width: 200px;
-    height: 40px;
-    background-color: #FFCCBC;
-    margin: 5px;
-    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-    padding-top: 15px;
-    font-size: 1.5em;
-}
-
 .VotingListView-loading {
     font-size: 3em;
     margin-top: 20px;

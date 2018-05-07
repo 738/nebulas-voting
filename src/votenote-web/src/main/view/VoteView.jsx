@@ -1,10 +1,12 @@
 import React from 'react';
+import './VoteView.css';
 
 class VoteView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             votingItem: {},
+            isLoading: true,
         }
     }
 
@@ -46,7 +48,8 @@ class VoteView extends React.Component {
                                 choices: result.choices.map((choice) => 
                                     [choice[0], choice[1].length]
                                 ),
-                            }
+                            },
+                            isLoading: false,
                         })
                     } catch (err) {
                         console.log(err);
@@ -58,15 +61,31 @@ class VoteView extends React.Component {
 
     render() {
         return <div className="VoteView-container">
-            <h1>Vote</h1>
-            <div className="VoteView-title">Title: {this.state.votingItem.title}</div>
-            <div className="VoteView-author">Author: {this.state.votingItem.author}</div>
-            {this.state.votingItem.choices && this.state.votingItem.choices.map((choice, index) => 
-                <div key={index}>
-                    <div className="VoteView-choice">Choice #{index + 1}: {choice[0]}</div>
-                    <div className="VoteView-choice">Selected by {choice[1]} people</div>
+            <h1 className="VoteView-title">Vote</h1>
+            { !this.state.isLoading ?
+                <div>
+                    <div className="VoteView-item">Id</div>
+                    <div className="VoteView-item">{this.state.votingItem.id}</div>
+                    <br></br>
+                    <div className="VoteView-item">Title</div>
+                    <div className="VoteView-item">{this.state.votingItem.title}</div>
+                    <br></br>
+
+                    <div className="VoteView-item">Author</div>
+                    <div className="VoteView-item">{this.state.votingItem.author}</div>
+                    <br></br>
+
+                    {this.state.votingItem.choices && this.state.votingItem.choices.map((choice, index) => 
+                        <div key={index}>
+                            <div className="VoteView-item">Choice #{index + 1}</div>
+                            <div className="VoteView-item">{choice[0]} {`(${choice[1]})`}</div>
+                            <br></br>
+                        </div>
+                    )}
                 </div>
-            )}
+                :
+                <div className="VoteView-loading">Loading...</div>
+            }
         </div>;
     }
 }
