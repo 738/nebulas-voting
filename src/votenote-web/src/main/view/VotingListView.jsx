@@ -3,8 +3,8 @@ import './VotingListView.css';
 import VotingItemView from './VotingItemView';
 import { Link } from 'react-router-dom';
 import SimpleButton from '../../common/SimpleButton';
-import { dappAddress } from '../../config';
 import logo from '../../img/logo.png';
+import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -20,19 +20,7 @@ class VotingListView extends Component {
     }
 
     fetchVotingList() {
-        var func = "getVotingList";
-        window.postMessage({
-            "target": "contentscript",
-            "data": {
-                "to": dappAddress,
-                "value": "0",
-                "contract": {
-                    "function": func,
-                    "args": "",
-                }
-            },
-            "method": "neb_call"
-        }, "*");
+        postMessageToSmartContract("getVotingList", "", "neb_call");
 
         window.addEventListener('message', function (e) {
             if (e.data.data.neb_call) {

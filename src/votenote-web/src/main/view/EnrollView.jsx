@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import './EnrollView.css';
 import SimpleButton from '../../common/SimpleButton';
-import { dappAddress } from '../../config';
+import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
 
 class EnrollView extends Component {
     constructor(props) {
@@ -20,20 +20,8 @@ class EnrollView extends Component {
             alert('fill the field');
             return;
         }
-        var func = "enroll";
         var args = `[\"${this.state.title}\", \"${this.state.choices.join('|')}\", \"${this.state.author}\"]`;
-        window.postMessage({
-            "target": "contentscript",
-            "data": {
-                "to": dappAddress,
-                "value": "0",
-                "contract": {
-                    "function": func,
-                    "args": args,
-                }
-            },
-            "method": "neb_sendTransaction"
-        }, "*");
+        postMessageToSmartContract("enroll", args, "neb_sendTransaction");
     }
 
     onBackButtonClicked() {
