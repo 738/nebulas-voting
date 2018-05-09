@@ -61,28 +61,29 @@ VotingManager.prototype = {
 
         LocalContractStorage.put(maxId, votingItem.id);
         this.votingItemRepo.put(id, votingItem);
-        return votingItem;
+        return { votingItem, func: "enroll" };
     },
 
-    get: function(id) {
+    get: function(id, returnFunc = true) {
         if (id === undefined) throw new Error("id is invalid");
         var votingItem = this.votingItemRepo.get(id);
-        return votingItem;
+        if (returnFunc) return { votingItem, func: "get" };
+        else return votingItem;
     },
 
     getVotingList: function() {
         var id = LocalContractStorage.get(maxId);
         var votingLists = [];
-        if (!id) return votingLists;
+        if (!id) return { votingLists, func: "getVotingList" };
         for (var i = 1; i <= id; i++) {
-            var votingItem = this.get(i);
+            var votingItem = this.get(i, false);
             if (votingItem !== undefined) votingLists.push(votingItem);
         }
-        return votingLists;
+        return { votingLists, func: "getVotingList" };
     },
 
     vote: function(id, index) {
-        var votingItem = this.get(id);
+        var votingItem = this.get(id, false);
         if (votingItem.choices.length <= index) throw new Error("There is no voting choice in that index");
         var voterAddress = Blockchain.transaction.from;
         // 한 사람이 같은 투표에 여러 번 투표할 수 없음
@@ -93,7 +94,7 @@ VotingManager.prototype = {
         }
         votingItem.choices[index][1].push(Blockchain.transaction.from);
         this.votingItemRepo.put(id, votingItem);
-        return votingItem;
+        return { votingItem, func: "vote" };
     }
 };
 
