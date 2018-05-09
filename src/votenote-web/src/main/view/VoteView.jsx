@@ -2,6 +2,7 @@ import React from 'react';
 import './VoteView.css';
 import SimpleButton from '../../common/SimpleButton';
 import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
+import MainDataController from '../datacontroller/MainDataController';
 
 class VoteView extends React.Component {
     constructor(props) {
@@ -14,41 +15,29 @@ class VoteView extends React.Component {
     }
 
     componentDidMount() {
-        this.addListener();
+        MainDataController.addEventListenerToWindow(this.voteViewlistener.bind(this));
         this.fetchVotingItem();
     }
 
-    addListener() {
-        window.addEventListener('message', function (e) {
-            if (e.data.data.neb_call) {
-                var result = e.data.data.neb_call.result;
-                if (result === 'null') {
-                    console.log('result is null');
-                } else {
-                    try {
-                        result = JSON.parse(e.data.data.neb_call.result);
-                        console.log('AAA ', result);
-                        this.setState({
-                            ...this.state,
-                            votingItem: {
-                                ...this.state.votingItem,
-                                id: result.id || this.state.votingItem.id,
-                                title: result.title || this.state.votingItem.title,
-                                author: result.author || this.state.votingItem.author,
-                                choices: result.choices ? result.choices.map((choice) =>
-                                    [choice[0], choice[1].length])
-                                    :
-                                    this.state.votingItem.choices,
-                            },
-                            isLoading: false,
-                            isVoted: result === 'you can vote just once' ? true : false,
-                        })
-                    } catch (err) {
-                        console.log(err);
-                    }
-                }
-            }
-        }.bind(this));
+    voteViewlistener(func, result) {
+        if (func === "get") {
+            this.setState({
+                ...this.state,
+                votingItem: {
+                    ...this.state.votingItem,
+                    id: result.votingItem.id,
+                    title: result.votingItem.title,
+                    author: result.votingItem.author,
+                    choices: result.votingItem.choices.map(choice => [choice[0], choice[1].length]),
+                },
+                isLoading: false,
+            });
+        } else if (func === "vote") {
+            this.setState({
+                ...this.state,
+                isVoted: result.result_code === 1 ? true : false,
+            });
+        }
     }
 
     fetchVotingItem() {

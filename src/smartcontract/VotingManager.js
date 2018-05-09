@@ -89,7 +89,7 @@ VotingManager.prototype = {
         // 한 사람이 같은 투표에 여러 번 투표할 수 없음
         for(var i = 0; i < votingItem.choices.length; i++) {
             for(var j = 0; j < votingItem.choices[i][1].length; j++) {
-                if (voterAddress === votingItem.choices[i][1][j]) return 'you can vote just once';
+                if (voterAddress === votingItem.choices[i][1][j]) return { result_code: 1, func: "vote"};
             }
         }
         votingItem.choices[index][1].push(Blockchain.transaction.from);
