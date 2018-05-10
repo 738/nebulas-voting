@@ -7,7 +7,8 @@ class MainDataController {
 
     addEventListenerToWindow(listener) {
         // if (this.isEventListenerAdded === true) return; 
-        window.addEventListener('message', function (e) {
+        // return token (in order to remove this event listener using this token)
+        window.addEventListener('message', e => {
             if (e.data.data.neb_call) {
                 var result = e.data.data.neb_call.result;
                 if (result === 'null') {

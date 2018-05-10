@@ -90,8 +90,9 @@ VotingManager.prototype = {
         var voterAddress = Blockchain.transaction.from;
         // 한 사람이 같은 투표에 여러 번 투표할 수 없음
         for (var i = 0; i < votingItem.choices.length; i++)
-            for (var j = 0; j < votingItem.choices[i][1].length; j++)
+            for (var j = 0; j < votingItem.choices[i][1].length; j++) {
                 if (voterAddress === votingItem.choices[i][1][j]) return { result_code: 1, func: "vote" };
+            }
         if (!votingItem.isMultipleSelection) {
             if (votingItem.choices.length <= index) throw new Error("There is no voting choice in that index");
             votingItem.choices[index][1].push(voterAddress);
@@ -104,7 +105,7 @@ VotingManager.prototype = {
             });
             indexes.forEach(value => {
                 votingItem.choices[value][1].push(voterAddress);
-            })
+            });
         }
         this.votingItemRepo.put(id, votingItem);
         return { votingItem, func: "vote" };
