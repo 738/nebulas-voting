@@ -1,7 +1,7 @@
 "use strict";
 
 // id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string
-var VotingItem = function(item) {
+var VotingItem = function (item) {
     if (item) {
         var obj = JSON.parse(item);
         this.id = obj.id;
@@ -9,16 +9,18 @@ var VotingItem = function(item) {
         this.choices = obj.choices;
         this.author = obj.author;
         this.address = obj.address;
+        this.isMultipleSelection = obj.isMultipleSelection;
     } else {
         this.title = '';
         this.choices = [];
         this.author = '';
         this.address = '';
+        this.isMultipleSelection = false;
     }
 };
 
 VotingItem.prototype = {
-    toString: function() {
+    toString: function () {
         return JSON.stringify(this);
     }
 };
@@ -35,9 +37,9 @@ var VotingManager = function () {
 };
 const maxId = 'MAXID';
 VotingManager.prototype = {
-    init: function() {},
+    init: function () { },
 
-    enroll: function(title, choices, author) {
+    enroll: function (title, choices, author, isMultipleSelection = false) {
         var choicesParsed = choices.split('|');
         if (title === '' || choices.length === 0) throw new Error("empty title or choices");
         if (title.length > 64) throw new Error("title exceed limit length");
@@ -53,10 +55,11 @@ VotingManager.prototype = {
         votingItem.title = title;
         votingItem.author = author || address;
         votingItem.address = address;
+        votingItem.isMultipleSelection = isMultipleSelection;
 
         // [['AAA', []], ['BBB', []], ['CCC', []]] 형식으로 저장
         var choicesWithNumber = [];
-        for(var choice of choicesParsed) choicesWithNumber.push([choice, []]);
+        for (var choice of choicesParsed) choicesWithNumber.push([choice, []]);
         votingItem.choices = choicesWithNumber;
 
         LocalContractStorage.put(maxId, votingItem.id);
@@ -64,14 +67,14 @@ VotingManager.prototype = {
         return { votingItem, func: "enroll" };
     },
 
-    get: function(id, returnFunc = true) {
+    get: function (id, returnFunc = true) {
         if (id === undefined) throw new Error("id is invalid");
         var votingItem = this.votingItemRepo.get(id);
         if (returnFunc) return { votingItem, func: "get" };
         else return votingItem;
     },
 
-    getVotingList: function() {
+    getVotingList: function () {
         var id = LocalContractStorage.get(maxId);
         var votingLists = [];
         if (!id) return { votingLists, func: "getVotingList" };
@@ -82,17 +85,27 @@ VotingManager.prototype = {
         return { votingLists, func: "getVotingList" };
     },
 
-    vote: function(id, index) {
+    vote: function (id, index) {
         var votingItem = this.get(id, false);
-        if (votingItem.choices.length <= index) throw new Error("There is no voting choice in that index");
         var voterAddress = Blockchain.transaction.from;
         // 한 사람이 같은 투표에 여러 번 투표할 수 없음
-        for(var i = 0; i < votingItem.choices.length; i++) {
-            for(var j = 0; j < votingItem.choices[i][1].length; j++) {
-                if (voterAddress === votingItem.choices[i][1][j]) return { result_code: 1, func: "vote"};
-            }
+        for (var i = 0; i < votingItem.choices.length; i++)
+            for (var j = 0; j < votingItem.choices[i][1].length; j++)
+                if (voterAddress === votingItem.choices[i][1][j]) return { result_code: 1, func: "vote" };
+        if (!votingItem.isMultipleSelection) {
+            if (votingItem.choices.length <= index) throw new Error("There is no voting choice in that index");
+            votingItem.choices[index][1].push(voterAddress);
         }
-        votingItem.choices[index][1].push(Blockchain.transaction.from);
+        // Multiple Selection
+        else {
+            var indexes = index.split('|').map(value => Number(value));
+            indexes.forEach(value => {
+                if (value >= votingItem.choices.length) throw new Error("There is no voting choice in that index");
+            });
+            indexes.forEach(value => {
+                votingItem.choices[value][1].push(voterAddress);
+            })
+        }
         this.votingItemRepo.put(id, votingItem);
         return { votingItem, func: "vote" };
     }
