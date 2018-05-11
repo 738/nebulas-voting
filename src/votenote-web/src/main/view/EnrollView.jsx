@@ -11,6 +11,7 @@ class EnrollView extends Component {
             title: '',
             author: '',
             choices: [''],
+            isMultipleSelection: false,
         }
     }
     MAX_CHOICE = 5;
@@ -39,6 +40,13 @@ class EnrollView extends Component {
         this.setState({
             ...this.state,
             author: e.target.value,
+        });
+    }
+
+    onIsMultipleSelectionClicked() {
+        this.setState({
+            ...this.state,
+            isMultipleSelection: !this.state.isMultipleSelection,
         });
     }
 
@@ -78,7 +86,11 @@ class EnrollView extends Component {
                     <div className="EnrollView-label">Author</div>
                     <input className="EnrollView-input" type="text" maxLength="35" size="40" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
                     <br></br>
-
+                    <div>
+                        <input id="isMultipleSelection" type="checkbox" checked={this.state.isMultipleSelection} onClick={this.onIsMultipleSelectionClicked.bind(this)}/>
+                        <label for="isMultipleSelection">Multiple Selection</label>
+                    
+                    </div>
                     { this.state.choices.map((choice, index) =>
                         <div key={index}>
                             <div className="EnrollView-label">Choice #{index + 1}</div>
