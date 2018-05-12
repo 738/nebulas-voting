@@ -32,11 +32,12 @@ function enroll(title, choices, author);
 * id is created automatically from 1 sequentially
 
 ### Parameter Values
-|Argument|Description|
-|--------|-----------|
-|title   |the title of voting|
-|choices |choices of voting(seperated by "\|")|
-|author  |author of voting(if there is no author parameter, author value is filled by the author's address)|
+|Argument|Type  |Description|
+|--------|------|-----------|
+|title   |string|the title of voting|
+|choices |string|choices of voting(seperated by "\|")|
+|author  |string|author of voting(if there is no author parameter, author value is filled by the author's address)|
+|isMultipleSelection|boolean|if it is true, voter can vote one more choices. default value is false|
 
 ### Syntax
 ```
@@ -57,7 +58,7 @@ function vote(id, index);
 * can not vote twice or more by one address
 
 ### Parameter Values
-|Argument|Description|
-|--------|-----------|
-|id      |the id of voting|
-|index   |the index of choices of the voting|
+|Argument|Type            |Description|
+|--------|----------------|-----------|
+|id      |string          |the id of voting|
+|index   |number \| string|the index of choices of the voting. if selection is more than one, this value should be seperated by "\|"|
