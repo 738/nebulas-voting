@@ -1,3 +1,3 @@
-const dappAddress = "n1qErR5EnbXtmA2Vd6h7F98C7QsT3PxjNcU";
+const dappAddress = "n1wES4kVUoaPjA3PfjiM8h17E19qcqkWCiA";
 
 export { dappAddress };

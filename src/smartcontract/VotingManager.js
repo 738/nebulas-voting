@@ -45,13 +45,13 @@ VotingManager.prototype = {
 
     enroll: function (title, choices, author, password, isMultipleSelection = false) {
         var choicesParsed = choices.split('|');
-        if (title === '' || choices.length === 0) return { result_code: 1, result_message: "empty title or choices" };
-        if (title.length > 64) return { result_code: 1, result_message: "title exceed limit length" };
+        if (title === '' || choices.length === 0) return { result_code: 1, result_message: "empty title or choices", func: "enroll" };
+        if (title.length > 64) return { result_code: 1, result_message: "title exceed limit length", func: "enroll" };
 
         var id = LocalContractStorage.get(maxId) ? LocalContractStorage.get(maxId) + 1 : 1;
 
         var votingItem = this.votingItemRepo.get(id);
-        if (votingItem) return { result_code: 1, result_message: "Voting Item has been occupied" };
+        if (votingItem) return { result_code: 1, result_message: "Voting Item has been occupied", func: "enroll" };
 
         var address = Blockchain.transaction.from;
         votingItem = new VotingItem();
@@ -74,11 +74,12 @@ VotingManager.prototype = {
     },
 
     get: function (id, password, returnFunc = true, fromGetVotingList = false) {
-        if (id === undefined) return { result_code: 1, result_message: "id is invalid" };
+        if (id === undefined) return { result_code: 1, result_message: "id is invalid", func: "get" };
         var votingItem = this.votingItemRepo.get(id);
+        if (!votingItem) return undefined;
         if (fromGetVotingList) votingItem = { id: votingItem.id, title: votingItem.title, author: votingItem.author, timestamp: votingItem.timestamp };
         // if votingItem has password, you need password to get this votingItem.
-        if (votingItem.password && votingItem.password !== password) return { result_code: 1, result_message: 'password is incorrect'};
+        if (votingItem.password && votingItem.password !== password) return { result_code: 1, result_message: 'password is incorrect', func: "get"};
         if (returnFunc) return { votingItem, func: "get" };
         else return votingItem;
     },
@@ -105,14 +106,14 @@ VotingManager.prototype = {
             }
         if (!votingItem.isMultipleSelection) {
             if (indexes.length > 1) return { result_code: 1, result_message: "cannot select several" };
-            if (votingItem.choices.length <= indexes[0]) return { result_code: 1, result_message: "There is no voting choice in that index" };
+            if (votingItem.choices.length <= indexes[0]) return { result_code: 1, result_message: "There is no voting choice in that index", func: "vote" };
             votingItem.choices[index][1].push(voterAddress);
         }
         // Multiple Selection
         else {
             var indexes = index.split('|').map(value => Number(value));
             indexes.forEach(value => {
-                if (value >= votingItem.choices.length) return { result_code: 1, result_message: "There is no voting choice in that index" };
+                if (value >= votingItem.choices.length) return { result_code: 1, result_message: "There is no voting choice in that index", func: "vote" };
             });
             indexes.forEach(value => {
                 votingItem.choices[value][1].push(voterAddress);
@@ -120,6 +121,15 @@ VotingManager.prototype = {
         }
         this.votingItemRepo.put(id, votingItem);
         return { votingItem, func: "vote" };
+    },
+
+    delete: function(id, password) {
+        var votingItem = this.votingItemRepo.get(id, password, false);
+        if (!votingItem) return { result_code: 1, result_message: 'id is invalid', func: 'delete' };
+        if (Blockchain.transaction.from !== votingItem.address) return { result_code: 1, result_message: 'you are not author of this voting', func: 'delete' };
+        this.votingItemRepo.del(id);
+        if (this.votingItemRepo.get(id, password, false)) return { result_code: 1, result_message: 'delete failed', func: 'delete'};
+        return { result_code: 0, result_message: 'delete succeed', func: 'delete'};
     }
 };
 

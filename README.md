@@ -62,3 +62,8 @@ function vote(id, index, password);
 |--------|------|-----------|
 |id      |number|the id of voting|
 |index   |string|the index of choices of the voting. if selection is more than one, this value should be seperated by "\|"|
+
+### Syntax
+```
+function delete(id, password);
+```

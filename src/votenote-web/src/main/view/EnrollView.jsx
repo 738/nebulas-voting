@@ -53,7 +53,6 @@ class EnrollView extends Component {
     onChoicesChanged(index, e) {
         var tempChoices = this.state.choices;
         tempChoices[index] = e.target.value;
-        console.log(tempChoices[index])
         this.setState({
             ...this.state,
             choices: tempChoices,
