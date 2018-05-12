@@ -26,7 +26,7 @@
 
 ### Syntax
 ```
-function enroll(title, choices, author);
+function enroll(title, choices, author, password, isMultipleSelection);
 ```
 * enroll a voting
 * id is created automatically from 1 sequentially
@@ -41,7 +41,7 @@ function enroll(title, choices, author);
 
 ### Syntax
 ```
-function get(id);
+function get(id, password, returnFunc, fromGetVotingList);
 ```
 * get a voting by id
 
@@ -53,12 +53,12 @@ function getVotingList();
 
 ### Syntax
 ```
-function vote(id, index);
+function vote(id, index, password);
 ```
 * can not vote twice or more by one address
 
 ### Parameter Values
-|Argument|Type            |Description|
-|--------|----------------|-----------|
-|id      |string          |the id of voting|
-|index   |number \| string|the index of choices of the voting. if selection is more than one, this value should be seperated by "\|"|
+|Argument|Type  |Description|
+|--------|------|-----------|
+|id      |number|the id of voting|
+|index   |string|the index of choices of the voting. if selection is more than one, this value should be seperated by "\|"|
