@@ -10,12 +10,16 @@ var VotingItem = function (item) {
         this.author = obj.author;
         this.address = obj.address;
         this.isMultipleSelection = obj.isMultipleSelection;
+        this.timestamp = new Date().getTime();
+        this.password = obj.password;
     } else {
         this.title = '';
         this.choices = [];
         this.author = '';
         this.address = '';
         this.isMultipleSelection = false;
+        this.timestamp = new Date().getTime();
+        this.password = '';
     }
 };
 
@@ -39,7 +43,7 @@ const maxId = 'MAXID';
 VotingManager.prototype = {
     init: function () { },
 
-    enroll: function (title, choices, author, isMultipleSelection = false) {
+    enroll: function (title, choices, author, isMultipleSelection = false, password) {
         var choicesParsed = choices.split('|');
         if (title === '' || choices.length === 0) throw new Error("empty title or choices");
         if (title.length > 64) throw new Error("title exceed limit length");
@@ -56,6 +60,8 @@ VotingManager.prototype = {
         votingItem.author = author || address;
         votingItem.address = address;
         votingItem.isMultipleSelection = isMultipleSelection;
+        votingItem.timestamp = new Date().getTime();
+        votingItem.password = password;
 
         // [['AAA', []], ['BBB', []], ['CCC', []]] 형식으로 저장
         var choicesWithNumber = [];
