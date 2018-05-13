@@ -85,11 +85,10 @@ class EnrollView extends Component {
                     <div className="EnrollView-label">Author</div>
                     <input className="EnrollView-input" type="text" maxLength="35" size="40" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
                     <br></br>
-                    <div>
+                    {/* <div>
                         <input id="isMultipleSelection" type="checkbox" checked={this.state.isMultipleSelection} onClick={this.onIsMultipleSelectionClicked.bind(this)}/>
                         <label for="isMultipleSelection">Multiple Selection</label>
-                    
-                    </div>
+                    </div> */}
                     { this.state.choices.map((choice, index) =>
                         <div key={index}>
                             <div className="EnrollView-label">Choice #{index + 1}</div>

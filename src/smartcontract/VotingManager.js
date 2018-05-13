@@ -1,6 +1,6 @@
 "use strict";
 
-// id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string
+// id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string, isMultipleSelection: boolen, timestamp: number,  password: string
 var VotingItem = function (item) {
     if (item) {
         var obj = JSON.parse(item);

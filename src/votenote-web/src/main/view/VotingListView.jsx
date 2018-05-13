@@ -45,7 +45,7 @@ class VotingListView extends Component {
                         <div className="VotingListView-description">
                             - You can only vote once at one voting<br />
                             - Developed by <a href="https://github.com/JonJee">Jon Jee</a> (Korea)<br />
-                            - Blockchain Powered by Nebulas (This is Testnet)<br />
+                            - Blockchain Powered by Nebulas (This is Mainnet)<br />
                             - Transaction is confirmed in 15 seconds<br />
                         </div>
                         <img src={logo} width="100px" />
@@ -57,7 +57,7 @@ class VotingListView extends Component {
                     </div>
                     :
                     <div className="VotingListView-loading">Loading...
-                        <div style={{ fontSize: '15px' }}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Testnet</div>
+                        <div style={{ fontSize: '15px' }}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Mainnet</div>
                     </div>
                 }
             </div>

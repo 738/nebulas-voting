@@ -47,13 +47,18 @@ class VoteView extends React.Component {
 
     onVoteButtonClicked(index) {
         const { match: { params } } = this.props;
-        postMessageToSmartContract("vote", `[${params.id}, ${index}]`, "neb_call");
+        postMessageToSmartContract("vote", `[${params.id}, \"${index}\"]`, "neb_call");
 
         // 이미 투표했으면 transaction을 보내지 않음
         setTimeout(() => {
             if (!this.state.isVoted) 
-                postMessageToSmartContract("vote", `[${params.id}, ${index}]`, "neb_sendTransaction");
+                postMessageToSmartContract("vote", `[${params.id}, \"${index}\"]`, "neb_sendTransaction");
         }, 3000);
+    }
+
+    onDeleteButtonClicked() {
+        const { match: { params } } = this.props;
+        postMessageToSmartContract("delete", `[${params.id}]`, "neb_sendTransaction");
     }
 
     render() {
@@ -80,6 +85,7 @@ class VoteView extends React.Component {
                             <br></br>
                         </div>
                     )}
+                    <SimpleButton color="orange" onClick={this.onDeleteButtonClicked.bind(this)}>Delete</SimpleButton>
                     {this.state.isVoted && <div className="VoteView-voted">You already voted!</div>}
                 </div>
                 :
