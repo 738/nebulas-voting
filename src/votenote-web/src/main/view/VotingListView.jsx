@@ -44,7 +44,7 @@ class VotingListView extends Component {
                         <h1 className="VotingListView-title">Voting List</h1>
                         <div className="VotingListView-description">
                             - You can only vote once at one voting<br />
-                            - Developed by <a href="https://github.com/JonJee">Jon Jee</a> (Korea)<br />
+                            - Developed by <a href="https://github.com/JonJee/nebulas-voting">Jon Jee</a> (Korea)<br />
                             - Blockchain Powered by Nebulas (This is Mainnet)<br />
                             - Transaction is confirmed in 15 seconds<br />
                         </div>
