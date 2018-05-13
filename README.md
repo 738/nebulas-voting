@@ -5,6 +5,9 @@
 * Blockchain Powered by Nebulas
 * developed by Jon Jee
 
+![votinglistview](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_votinglistview.png)
+
+![voteview](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_voteview.png)
 ## How to use
 1. enter https://votenote.herokuapp.com/
 
