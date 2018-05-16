@@ -6,6 +6,7 @@ import SimpleButton from '../../common/SimpleButton';
 import logo from '../../img/logo.png';
 import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
 import MainDataController from '../datacontroller/MainDataController';
+import * as axios from 'axios';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class VotingListView extends Component {
             votingItems: [],
             isLoading: true,
         }
+        this.updateVotingList = this.updateVotingList.bind(this);
     }
 
     componentDidMount() {
@@ -22,7 +24,43 @@ class VotingListView extends Component {
     }
 
     fetchVotingList() {
-        postMessageToSmartContract("getVotingList", "", "neb_call");
+        let VL;
+        axios({
+            method: 'post',
+            url: 'https://mainnet.nebulas.io/v1/user/call',
+            data: {
+              from: 'n1Ry1HRT39EtXtk6XHSzUUhNe5k8Q9zmixm',
+              to: 'n1ovFARWjeguJipEZ4j4SYq3RSFZwy9io3z',
+              value: "0",
+              nonce: 26,
+              gasPrice: "1000000",
+              gasLimit: "2000000",
+              contract: {
+                  function: "getVotingList",
+                  args: ""
+              }
+            }
+          }).then(response => {
+              
+            VL = JSON.parse(response.data.result.result).votingLists
+            console.log([...VL]);
+            console.log(this);
+            this.setState({
+                ...this.state,
+                votingItems: [...VL],
+                isLoading: false,
+            });
+          }).catch(error => {
+            console.log('error: ', error);
+          });
+          
+    }
+
+    updateVotingList(vl) {
+        this.setState({
+            ...this.state,
+            votingItems: [...vl],
+        });
     }
 
     // window의 eventlistener에서 result가 들어오면 실행되는 함수
