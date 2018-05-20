@@ -27,8 +27,8 @@ export function callSmartContract(func, args, callback) {
 export function sendTransaction(value, func, args, callbackListener) {
     var nebPay = new NebPay();
     var serialNumber;
-    // var callbackUrl = NebPay.config.mainnetUrl;
-    var callbackUrl = NebPay.config.testnetUrl;
+    var callbackUrl = NebPay.config.mainnetUrl;
+    // var callbackUrl = NebPay.config.testnetUrl;
     serialNumber = nebPay.call(dappAddress, value, func, args, {
         callback: callbackUrl,
         listener: setTimeout(() => { onRefreshClick(); }, 22500),  //set listener for extension transaction result

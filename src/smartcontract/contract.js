@@ -108,7 +108,7 @@ class VotingManager {
         if (!votingItem) throw new Error(`Argument Invalid: There is no votingItem in id: ${id}`);
         // unlike
         for (var i = 0; i < votingItem.like.length; i++)
-            if(votingItem.like[i] === voterAddress) {
+            if (votingItem.like[i] === voterAddress) {
                 votingItem.like.splice(i, 1);
                 this.votingItems.set(id, votingItem);
                 return votingItem;
