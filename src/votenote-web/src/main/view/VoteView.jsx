@@ -20,34 +20,14 @@ class VoteView extends React.Component {
         this.fetchVotingItem();
     }
 
-    voteViewlistener(func, result) {
-        if (func === "get") {
-            this.setState({
-                ...this.state,
-                votingItem: {
-                    ...this.state.votingItem,
-                    id: result.votingItem.id,
-                    title: result.votingItem.title,
-                    author: result.votingItem.author,
-                    choices: result.votingItem.choices.map(choice => [choice[0], choice[1].length]),
-                },
-                isLoading: false,
-            });
-        } else if (func === "vote") {
-            this.setState({
-                ...this.state,
-                isVoted: result.result_code === 1 ? true : false,
-            });
-        }
-    }
-
     fetchVotingItem() {
         const { match: { params } } = this.props;
         callSmartContract("get", `[${params.id}]`, this.updateVotingItem.bind(this));
     }
 
     updateVotingItem(tx) {
-        let votingItem = JSON.parse(tx.result).votingItem;
+        console.log(tx);
+        let votingItem = JSON.parse(tx.result);
         this.setState({
             ...this.state,
             votingItem: {
@@ -63,21 +43,8 @@ class VoteView extends React.Component {
 
     onVoteButtonClicked(index) {
         const { match: { params } } = this.props;
-        callSmartContract("vote", `[${params.id}, \"${index}\"]`, this.updateIsVoted.bind(this));
-
-        // 이미 투표했으면 transaction을 보내지 않음
-        setTimeout(() => {
-            if (!this.state.isVoted)
-                sendTransaction("", "vote", `[${params.id}, \"${index}\"]`, this.onVoteTransactionFinished.bind(this));
-        }, 3000);
-    }
-
-    updateIsVoted(tx) {
-        let result_code = JSON.parse(tx.result).result_code;
-        this.setState({
-            ...this.state,
-            isVoted: result_code === 1 ? true : false,
-        });
+        const args = `[${params.id}, ${index}]`
+        sendTransaction("", "vote", args, this.onVoteTransactionFinished.bind(this));
     }
 
     onVoteTransactionFinished() {

@@ -19,6 +19,7 @@ export function callSmartContract(func, args, callback) {
             args: args
         }
     }).then(tx => {
+        // console.log(tx.result);
         callback(tx);
     });
 }
@@ -26,19 +27,18 @@ export function callSmartContract(func, args, callback) {
 export function sendTransaction(value, func, args, callbackListener) {
     var nebPay = new NebPay();
     var serialNumber;
-    var callbackUrl = NebPay.config.mainnetUrl;
-    // var callbackUrl = NebPay.config.testnetUrl;
+    // var callbackUrl = NebPay.config.mainnetUrl;
+    var callbackUrl = NebPay.config.testnetUrl;
     serialNumber = nebPay.call(dappAddress, value, func, args, {
         callback: callbackUrl,
-        listener: callbackListener  //set listener for extension transaction result
+        listener: setTimeout(() => { onRefreshClick(); }, 22500),  //set listener for extension transaction result
     });
-    setTimeout(() => {
-        onrefreshClick();
-    }, 1000);
-    function onrefreshClick() {
+
+    function onRefreshClick() {
         nebPay.queryPayInfo(serialNumber, { callback: callbackUrl })   //search transaction result from server (result upload to server by app)
-            .then(function (resp) {
-                console.log(resp);
+            .then(function (res) {
+                var msg = JSON.parse(res).msg;
+                if (msg === "success") callbackListener();
             })
             .catch(function (err) {
                 console.log(err);

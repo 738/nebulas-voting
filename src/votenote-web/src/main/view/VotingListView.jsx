@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom'
 import './VotingListView.css';
 import VotingItemView from './VotingItemView';
-import { Link } from 'react-router-dom';
 import SimpleButton from '../../common/SimpleButton';
 import logo from '../../img/logo.png';
 import { callSmartContract } from '../../common/dc/MessageDataController';
@@ -13,7 +13,7 @@ class VotingListView extends Component {
             votingItems: [],
             isLoading: true,
         }
-        this.updateVotingList = this.updateVotingList.bind(this);
+        this.onVotingItemClicked = this.onVotingItemClicked.bind(this);
     }
 
     componentDidMount() {
@@ -27,12 +27,21 @@ class VotingListView extends Component {
     updateVotingList(tx) {
         this.setState({
             ...this.state,
-            votingItems: JSON.parse(tx.result).votingLists,
+            votingItems: JSON.parse(tx.result),
             isLoading: false,
         });
     }
 
+    onErollButtonClicked() {
+        this.props.history.push('/enroll');
+    }
+
+    onVotingItemClicked(id) {
+        this.props.history.push(`/vote/${id}`);
+    }
+
     render() {
+        console.log(this.state.votingItems);
         return (
             <div className="VotingListView-Container">
                 {!this.state.isLoading ?
@@ -47,9 +56,9 @@ class VotingListView extends Component {
                         <img src={logo} width="100px" />
                         <VotingItemView isTableHead={true}></VotingItemView>
                         {this.state.votingItems && this.state.votingItems.map((item, index) =>
-                            <VotingItemView key={index} votingItem={item}></VotingItemView>
+                            <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                         )}
-                        <SimpleButton color="#FFCCBC"><Link to="/enroll">enroll</Link></SimpleButton>
+                        <SimpleButton color="#FFCCBC" onClick={this.onErollButtonClicked.bind(this)}>enroll</SimpleButton>
                     </div>
                     :
                     <div className="VotingListView-loading">Loading...
@@ -61,4 +70,4 @@ class VotingListView extends Component {
     }
 }
 
-export default VotingListView;
+export default withRouter(VotingListView);

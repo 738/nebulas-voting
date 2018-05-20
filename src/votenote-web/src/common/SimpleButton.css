@@ -7,4 +7,16 @@
     padding: 17px 25px;
     font-size: 1.5em;
     cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.simpleButton:hover {
+    background-color: #FFF!important;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
+}
+
+.simpleButton:active {
+    background-color: #aaa!important;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
 }
