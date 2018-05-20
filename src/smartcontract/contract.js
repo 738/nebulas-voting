@@ -72,7 +72,7 @@ class VotingManager {
         var votingLists = [];
         for (var i = 0; i < this.votingItemCount; i++) {
             var votingItem = this.get(i)
-            if (votingItem !== undefined) votingLists.push(votingItem);
+            if (votingItem !== undefined && votingItem !== null) votingLists.push(votingItem);
         }
         return votingLists;
     }
