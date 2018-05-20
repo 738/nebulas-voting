@@ -9,6 +9,7 @@
     cursor: pointer;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+    margin-right: 20px;
 }
 
 .simpleButton:hover {

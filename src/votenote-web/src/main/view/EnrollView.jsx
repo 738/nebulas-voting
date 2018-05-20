@@ -76,17 +76,17 @@ class EnrollView extends Component {
                 <h1 className="EnrollView-title">Enroll a Voting</h1>
                 <div className="EnrollView-form">
                     <div className="EnrollView-label">Title</div>
-                    <input className="EnrollView-input" type="text" maxLength="64" size="40" value={this.state.title} onChange={this.onTitleChanged.bind(this)}></input>
+                    <input className="EnrollView-input" type="text" maxLength="32" size="32" value={this.state.title} onChange={this.onTitleChanged.bind(this)}></input>
                     <br></br>
 
                     <div className="EnrollView-label">Author</div>
-                    <input className="EnrollView-input" type="text" maxLength="35" size="40" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
+                    <input className="EnrollView-input" type="text" maxLength="32" size="32" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
                     <br></br>
 
                     {this.state.choices.map((choice, index) =>
                         <div key={index}>
                             <div className="EnrollView-label">Choice #{index + 1}</div>
-                            <input className="EnrollView-input" type="text" maxLength="32" size="40" value={choice} onChange={(e) => { this.onChoicesChanged(index, e) }}></input>
+                            <input className="EnrollView-input" type="text" maxLength="32" size="32" value={choice} onChange={(e) => { this.onChoicesChanged(index, e) }}></input>
                             <br></br>
                         </div>
                     )}

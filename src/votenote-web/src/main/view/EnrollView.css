@@ -1,6 +1,7 @@
 .EnrollView-Container {
     display: inline-block;
     width: 800px;
+    height: 800px;
 }
 
 .EnrollView-title {

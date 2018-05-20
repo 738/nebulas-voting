@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <HeaderView title="Vote Note"></HeaderView>
+          <HeaderView title="Votestagram"></HeaderView>
           <Switch>
             <Route exact={true} path="/" component={VotingListView} />
             <Route path="/votinglist" component={VotingListView} />
