@@ -1,5 +1,5 @@
 var Stubs = require('./contractStubs');
-var VotingManager = require('./smartcontract');
+var VotingManager = require('./contract');
 
 let LocalContractStorage = Stubs.LocalContractStorage;
 let Blockchain = Stubs.Blockchain;
