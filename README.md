@@ -1,4 +1,4 @@
-# VoteNote
+# Votestagram
 
 > Voting Platform on Blockchain
 
@@ -9,11 +9,9 @@
 
 ![voteview](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_voteview.png)
 ## How to use
-1. enter https://votenote.herokuapp.com/
+1. enter https://votestagram.herokuapp.com/
 
 2. you can see voting lists and enroll button.
-
-- if loading scene lasts more than 5 seconds, you should install [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet) or set the network as Testnet.
 
 3. click enroll button.
 
@@ -29,7 +27,7 @@
 
 ### Syntax
 ```
-function enroll(title, choices, author, password, isMultipleSelection);
+function enroll(votingItem);
 ```
 * enroll a voting
 * id is created automatically from 1 sequentially
@@ -38,13 +36,12 @@ function enroll(title, choices, author, password, isMultipleSelection);
 |Argument|Type  |Description|
 |--------|------|-----------|
 |title   |string|the title of voting|
-|choices |string|choices of voting(seperated by "\|")|
 |author  |string|author of voting(if there is no author parameter, author value is filled by the author's address)|
-|isMultipleSelection|boolean|if it is true, voter can vote one more choices. default value is false|
+|choices |string[]|choices of voting|
 
 ### Syntax
 ```
-function get(id, password, returnFunc, fromGetVotingList);
+function get(id);
 ```
 * get a voting by id
 
@@ -56,7 +53,7 @@ function getVotingList();
 
 ### Syntax
 ```
-function vote(id, index, password);
+function vote(id, index);
 ```
 * can not vote twice or more by one address
 
@@ -64,9 +61,10 @@ function vote(id, index, password);
 |Argument|Type  |Description|
 |--------|------|-----------|
 |id      |number|the id of voting|
-|index   |string|the index of choices of the voting. if selection is more than one, this value should be seperated by "\|"|
+|index   |number|the index of choices of the voting.|
 
 ### Syntax
 ```
-function delete(id, password);
+function delete(id);
 ```
+* delete the votingItem in id
