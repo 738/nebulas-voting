@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import './HeaderView.css';
-import { Link } from 'react-router-dom'
 
 class HeaderView extends Component {
     constructor(props) {
         super(props);
     }
+
+    onTitleClicked() {
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <header className="HeaderView-Container">
-                <div className="HeaderView-title"><Link to="/" style={{textDecoration: "none", color: "white"}}>{this.props.title}</Link></div>
+                <div className="HeaderView-title" onClick={this.onTitleClicked.bind(this)}>{this.props.title}</div>
             </header>
         );
     }
 }
 
-export default HeaderView;
+export default withRouter(HeaderView);

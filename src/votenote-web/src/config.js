@@ -1,6 +1,6 @@
-const dappAddress = "n1eLFg23dwj6Rs5SXB5CSJJqA5uWEKzRXcC";
+const dappAddress = "n1pQgZDNWtHTofuVojF6jar5hHhAaMAFkpR";
 // mainnet: n1ovFARWjeguJipEZ4j4SYq3RSFZwy9io3z
-// testnet: n1eLFg23dwj6Rs5SXB5CSJJqA5uWEKzRXcC
+// testnet: n1pQgZDNWtHTofuVojF6jar5hHhAaMAFkpR
 
 const networkAddress = "https://testnet.nebulas.io";
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import './VotingListView.css';
 import VotingItemView from './VotingItemView';
 import SimpleButton from '../../common/SimpleButton';
@@ -41,7 +41,6 @@ class VotingListView extends Component {
     }
 
     render() {
-        console.log(this.state.votingItems);
         return (
             <div className="VotingListView-Container">
                 {!this.state.isLoading ?
@@ -54,7 +53,6 @@ class VotingListView extends Component {
                             - Transaction is confirmed in 15 seconds<br />
                         </div>
                         <img src={logo} width="100px" />
-                        <VotingItemView isTableHead={true}></VotingItemView>
                         {this.state.votingItems && this.state.votingItems.map((item, index) =>
                             <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                         )}

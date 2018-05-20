@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import './VoteView.css';
 import SimpleButton from '../../common/SimpleButton';
 import { callSmartContract, sendTransaction } from '../../common/dc/MessageDataController';
-import MainDataController from '../datacontroller/MainDataController';
 
 class VoteView extends React.Component {
     constructor(props) {
@@ -16,7 +15,6 @@ class VoteView extends React.Component {
     }
 
     componentDidMount() {
-        // MainDataController.addEventListenerToWindow(this.voteViewlistener.bind(this));
         this.fetchVotingItem();
     }
 
@@ -26,7 +24,6 @@ class VoteView extends React.Component {
     }
 
     updateVotingItem(tx) {
-        console.log(tx);
         let votingItem = JSON.parse(tx.result);
         this.setState({
             ...this.state,

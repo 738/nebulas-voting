@@ -1,57 +1,40 @@
 .VotingItemView-Container {
-    display: block;
-}
-
-.VotingItemView-id {
     display: inline-block;
-    width: 50px;
-    height: 40px;
-    background-color: white;
-    margin: 5px;
+    margin: 10px;
+    width: 280px;
+    height: 180px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-    padding-top: 15px;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-.VotingItemView-id:hover {
-    background-color: #FFF3E0;
-}
-.VotingItemView-id:active {
-    background-color: #FFE0B2;
+    background-color: #FFFFFF;
+    padding: 10px;
+    position: relative;
 }
 
 .VotingItemView-title {
     display: inline-block;
-    width: 500px;
-    height: 40px;
-    background-color: white;
-    margin: 5px;
-    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-    padding-top: 15px;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-.VotingItemView-title:hover {
-    background-color: #FFF3E0;
-}
-.VotingItemView-title:active {
-    background-color: #FFE0B2;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
 }
 
 .VotingItemView-author {
-    display: inline-block;
-    width: 500px;
-    height: 40px;
-    background-color: white;
-    margin: 5px;
-    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-    padding-top: 15px;
-    font-size: 1.5em;
-    cursor: pointer;
+    font-size: 20px;
+    text-align: left;
 }
-.VotingItemView-author:hover {
-    background-color: #FFF3E0;
+
+.VotingItemView-date {
+    font-size: 15px;
+    color: grey;
+    text-align: left;
 }
-.VotingItemView-author:active {
-    background-color: #FFE0B2;
+
+.VotingItemView-voter {
+    font-size: 15px;
+    color: grey;
+    text-align: left;
+}
+
+.VotingItemView-voteButton {
+    text-align: right;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
