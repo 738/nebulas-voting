@@ -79,7 +79,7 @@ class TestMap {
     }     
 
     del(key) {
-        map.delete(key);
+        this._map.delete(key);
     }
 }
 
