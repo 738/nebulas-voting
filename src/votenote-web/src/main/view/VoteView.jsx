@@ -1,7 +1,8 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import './VoteView.css';
 import SimpleButton from '../../common/SimpleButton';
-import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
+import { callSmartContract, sendTransaction } from '../../common/dc/MessageDataController';
 import MainDataController from '../datacontroller/MainDataController';
 
 class VoteView extends React.Component {
@@ -15,7 +16,7 @@ class VoteView extends React.Component {
     }
 
     componentDidMount() {
-        MainDataController.addEventListenerToWindow(this.voteViewlistener.bind(this));
+        // MainDataController.addEventListenerToWindow(this.voteViewlistener.bind(this));
         this.fetchVotingItem();
     }
 
@@ -42,23 +43,50 @@ class VoteView extends React.Component {
 
     fetchVotingItem() {
         const { match: { params } } = this.props;
-        postMessageToSmartContract("get", `[${params.id}]`, "neb_call");
+        callSmartContract("get", `[${params.id}]`, this.updateVotingItem.bind(this));
+    }
+
+    updateVotingItem(tx) {
+        let votingItem = JSON.parse(tx.result).votingItem;
+        this.setState({
+            ...this.state,
+            votingItem: {
+                ...this.state.votingItem,
+                id: votingItem.id,
+                title: votingItem.title,
+                author: votingItem.author,
+                choices: votingItem.choices.map(choice => [choice[0], choice[1].length]),
+            },
+            isLoading: false,
+        });
     }
 
     onVoteButtonClicked(index) {
         const { match: { params } } = this.props;
-        postMessageToSmartContract("vote", `[${params.id}, \"${index}\"]`, "neb_call");
+        callSmartContract("vote", `[${params.id}, \"${index}\"]`, this.updateIsVoted.bind(this));
 
         // 이미 투표했으면 transaction을 보내지 않음
         setTimeout(() => {
-            if (!this.state.isVoted) 
-                postMessageToSmartContract("vote", `[${params.id}, \"${index}\"]`, "neb_sendTransaction");
+            if (!this.state.isVoted)
+                sendTransaction("", "vote", `[${params.id}, \"${index}\"]`, this.onVoteTransactionFinished.bind(this));
         }, 3000);
+    }
+
+    updateIsVoted(tx) {
+        let result_code = JSON.parse(tx.result).result_code;
+        this.setState({
+            ...this.state,
+            isVoted: result_code === 1 ? true : false,
+        });
+    }
+
+    onVoteTransactionFinished() {
+        this.props.history.push("/");
     }
 
     onDeleteButtonClicked() {
         const { match: { params } } = this.props;
-        postMessageToSmartContract("delete", `[${params.id}]`, "neb_sendTransaction");
+        sendTransaction("", "delete", `[${params.id}]`, this.onVoteTransactionFinished.bind(this));
     }
 
     render() {
@@ -95,4 +123,4 @@ class VoteView extends React.Component {
     }
 }
 
-export default VoteView;
+export default withRouter(VoteView);

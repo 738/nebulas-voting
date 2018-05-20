@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import './EnrollView.css';
 import SimpleButton from '../../common/SimpleButton';
-import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
+import { sendTransaction } from '../../common/dc/MessageDataController';
+
 
 class EnrollView extends Component {
     constructor(props) {
@@ -22,11 +23,16 @@ class EnrollView extends Component {
             return;
         }
         var args = `[\"${this.state.title}\", \"${this.state.choices.join('|')}\", \"${this.state.author}\"]`;
-        postMessageToSmartContract("enroll", args, "neb_sendTransaction");
+        // postMessageToSmartContract("enroll", args, "neb_sendTransaction");
+        sendTransaction('0', 'enroll', args, this.onEnrollTransactionFinished.bind(this));
+    }
+
+    onEnrollTransactionFinished() {
+        this.props.history.push('/');
     }
 
     onBackButtonClicked() {
-        
+
     }
 
     onTitleChanged(e) {
@@ -89,7 +95,7 @@ class EnrollView extends Component {
                         <input id="isMultipleSelection" type="checkbox" checked={this.state.isMultipleSelection} onClick={this.onIsMultipleSelectionClicked.bind(this)}/>
                         <label for="isMultipleSelection">Multiple Selection</label>
                     </div> */}
-                    { this.state.choices.map((choice, index) =>
+                    {this.state.choices.map((choice, index) =>
                         <div key={index}>
                             <div className="EnrollView-label">Choice #{index + 1}</div>
                             <input className="EnrollView-input" type="text" maxLength="32" size="40" value={choice} onChange={(e) => { this.onChoicesChanged(index, e) }}></input>
@@ -108,4 +114,4 @@ class EnrollView extends Component {
     }
 }
 
-export default EnrollView;
+export default withRouter(EnrollView);

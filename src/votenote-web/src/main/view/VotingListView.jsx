@@ -4,9 +4,7 @@ import VotingItemView from './VotingItemView';
 import { Link } from 'react-router-dom';
 import SimpleButton from '../../common/SimpleButton';
 import logo from '../../img/logo.png';
-import { postMessageToSmartContract } from '../../common/dc/MessageDataController';
-import MainDataController from '../datacontroller/MainDataController';
-import * as axios from 'axios';
+import { callSmartContract } from '../../common/dc/MessageDataController';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -19,59 +17,19 @@ class VotingListView extends Component {
     }
 
     componentDidMount() {
-        MainDataController.addEventListenerToWindow(this.getVotingListlistener.bind(this));
         this.fetchVotingList();
     }
 
     fetchVotingList() {
-        let VL;
-        axios({
-            method: 'post',
-            url: 'https://mainnet.nebulas.io/v1/user/call',
-            data: {
-              from: 'n1Ry1HRT39EtXtk6XHSzUUhNe5k8Q9zmixm',
-              to: 'n1ovFARWjeguJipEZ4j4SYq3RSFZwy9io3z',
-              value: "0",
-              nonce: 26,
-              gasPrice: "1000000",
-              gasLimit: "2000000",
-              contract: {
-                  function: "getVotingList",
-                  args: ""
-              }
-            }
-          }).then(response => {
-              
-            VL = JSON.parse(response.data.result.result).votingLists
-            console.log([...VL]);
-            console.log(this);
-            this.setState({
-                ...this.state,
-                votingItems: [...VL],
-                isLoading: false,
-            });
-          }).catch(error => {
-            console.log('error: ', error);
-          });
-          
+        callSmartContract("getVotingList", "", this.updateVotingList.bind(this));
     }
 
-    updateVotingList(vl) {
+    updateVotingList(tx) {
         this.setState({
             ...this.state,
-            votingItems: [...vl],
+            votingItems: JSON.parse(tx.result).votingLists,
+            isLoading: false,
         });
-    }
-
-    // window의 eventlistener에서 result가 들어오면 실행되는 함수
-    getVotingListlistener(func, result) {
-        if (func === "getVotingList") {
-            this.setState({
-                ...this.state,
-                votingItems: result.votingLists,
-                isLoading: false,
-            });
-        }
     }
 
     render() {
@@ -82,7 +40,7 @@ class VotingListView extends Component {
                         <h1 className="VotingListView-title">Voting List</h1>
                         <div className="VotingListView-description">
                             - You can only vote once at one voting<br />
-                            - Developed by <a href="https://github.com/JonJee/nebulas-voting">Jon Jee</a> (Korea)<br />
+                            - Developed by <a href="https://github.com/JonJee/nebulas-voting">Jon Jee</a><br />
                             - Blockchain Powered by Nebulas (This is Mainnet)<br />
                             - Transaction is confirmed in 15 seconds<br />
                         </div>
