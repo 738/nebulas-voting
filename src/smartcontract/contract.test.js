@@ -15,6 +15,10 @@ let votingManager = contract.get(0);
 
 contract.enroll("{\"title\": \"which is the best blockchain?22\", \"author\": \"Jon Jee\", \"choices\": [\"BTC\", \"ETH \", \"NAS\"]}");
 contract.vote(1, 2);
+contract.likeOrUnlike(1);
+contract.likeOrUnlike(1);
+contract.likeOrUnlike(1);
+contract.likeOrUnlike(0);
 let votingManager2 = contract.get(1);
 
 console.log(votingManager);

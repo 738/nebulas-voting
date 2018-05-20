@@ -3,7 +3,7 @@ let LocalContractStorage = Stubs.LocalContractStorage;
 let Blockchain = Stubs.Blockchain;
 let TestMap = Stubs.TestMap;
 
-// id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string, timestamp: number
+// id: number, title: string, choice: Array<[string, Array<string>]>, author: string, address: string, timestamp: number, like: string[]
 class VotingItem {
     constructor(str) {
         let obj = str ? JSON.parse(str) : {};
@@ -12,7 +12,8 @@ class VotingItem {
         this.author = obj.author || '';
         this.address = obj.address || '';
         this.choices = obj.choices || [];
-        this.timestamp = new Date().getTime();
+        this.timestamp = obj.timestamp || 0;
+        this.like = obj.like || [];
     }
 
     toString() {
@@ -58,7 +59,6 @@ class VotingManager {
 
         this.votingItems.set(this.votingItemCount, newVotingItem);
         this.votingItemCount++;
-
         return newVotingItem;
     }
 
@@ -81,7 +81,7 @@ class VotingManager {
         var votingItem = this.get(id);
         var voterAddress = Blockchain.transaction.from;
 
-        // 한 사람이 같은 투표에 여러 번 투표할 수 없음
+        // One vote per One address
         for (var i = 0; i < votingItem.choices.length; i++)
             for (var j = 0; j < votingItem.choices[i][1].length; j++) {
                 if (voterAddress === votingItem.choices[i][1][j]) throw new Error("You already voted!");
@@ -100,6 +100,23 @@ class VotingManager {
         this.votingItems.del(id);
         if (this.votingItems.get(id)) throw new Error("Delete Failed")
         return { code: 0, msg: 'delete succeed' };
+    }
+
+    likeOrUnlike(id) {
+        var votingItem = this.votingItems.get(id);
+        var voterAddress = Blockchain.transaction.from;
+        if (!votingItem) throw new Error(`Argument Invalid: There is no votingItem in id: ${id}`);
+        // unlike
+        for (var i = 0; i < votingItem.like.length; i++)
+            if(votingItem.like[i] === voterAddress) {
+                votingItem.like.splice(i, 1);
+                this.votingItems.set(id, votingItem);
+                return votingItem;
+            }
+        // like
+        votingItem.like.push(voterAddress);
+        this.votingItems.set(id, votingItem);
+        return votingItem;
     }
 }
 
