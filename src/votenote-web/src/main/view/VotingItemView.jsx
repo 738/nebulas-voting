@@ -29,7 +29,7 @@ class VotingItemView extends Component {
             //     <button className="VotingItemView-voteButton" onClick={this.props.onVotingItemClicked}>vote</button>
             // </div>
             <Card className="VotingItemView-Card"
-                  style={cardStyle}>
+                style={cardStyle}>
                 <CardHeader
                     title={title}
                     subtitle={author}
@@ -37,11 +37,14 @@ class VotingItemView extends Component {
                     showExpandableButton={true}
                 />
                 <CardActions>
-                    <FlatButton label="vote" />
+                    {moment(timestamp).format('LLL')}
+                    <Divider />
+                    {theNumberOfVoters} voters
+                    {/* <FlatButton label="vote" /> */}
                 </CardActions>
                 <CardText expandable={true}>
                     <FlatButton label="vote" />
-                    
+
                 </CardText>
             </Card>
         );

@@ -47,13 +47,15 @@ class VotingListView extends Component {
     render() {
         const style = {
             marginRight: 20,
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px',
         };
         return (
             <div className="VotingListView-Container">
                 {!this.state.isLoading ?
                     <div>
                         <div>
-                            <h1 className="VotingListView-title">Voting List</h1>
                             {this.state.votingItems && this.state.votingItems.map((item, index) =>
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                             )}
