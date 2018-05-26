@@ -1,11 +1,13 @@
 import React from 'react';
+import { sendTransaction } from '../../common/dc/MessageDataController';
+
+// material-ui
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
-import { sendTransaction } from '../../common/dc/MessageDataController';
 
 export default class EnrollDialog extends React.Component {
     constructor(props) {

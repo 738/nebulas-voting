@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import './VotingListView.css';
-import VotingItemView from './VotingItemView';
-import SimpleButton from '../../common/SimpleButton';
-import logo from '../../img/logo.png';
 import { callSmartContract } from '../../common/dc/MessageDataController';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import FlatButton from 'material-ui/FlatButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import EnrollDialog from '../component/EnrollDialog';
+import VotingItemView from './VotingItemView';
+
+// material-ui
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 
 class VotingListView extends Component {
@@ -19,7 +17,6 @@ class VotingListView extends Component {
             isLoading: true,
             isOpenEnrollModal: false,
         }
-        this.onVotingItemClicked = this.onVotingItemClicked.bind(this);
     }
 
     componentDidMount() {
@@ -41,16 +38,19 @@ class VotingListView extends Component {
     onEnrollModalOpen = () => this.setState({ isOpenEnrollModal: true });
     onEnrollModalClosed = () => this.setState({ isOpenEnrollModal: false });
 
-    onVotingItemClicked(id) {
-        this.props.history.push(`/vote/${id}`);
-    }
-
     render() {
         const styles = {
-            floatingActionButtonStyle: {
+            floatingActionButton: {
                 position: 'fixed',
                 right: '20px',
                 bottom: '20px',
+            },
+            loading: {
+                width: '100%',
+                height: '600px',
+                display: 'flex',
+                alignItems: 'start',
+                justifyContent: 'center'
             }
         };
         return (
@@ -62,17 +62,14 @@ class VotingListView extends Component {
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                             )}
                         </div>
-                        <FloatingActionButton style={styles.floatingActionButtonStyle} onClick={this.onEnrollModalOpen.bind(this)}>
+                        <FloatingActionButton style={styles.floatingActionButton} onClick={this.onEnrollModalOpen.bind(this)}>
                             <ContentAdd />
                         </FloatingActionButton>
-                        <EnrollDialog isOpenModal={this.state.isOpenEnrollModal} closeListener={this.onEnrollModalClosed.bind(this)}/>
+                        <EnrollDialog isOpenModal={this.state.isOpenEnrollModal} closeListener={this.onEnrollModalClosed.bind(this)} />
                     </div>
                     :
-                    // <div className="VotingListView-loading">Loading...
-                    //     <div style={{ fontSize: '15px' }}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Mainnet</div>
-                    // </div>
-                    <div style={{width: '100%', height: '600px', display: 'flex', alignItems: 'start', justifyContent: 'center'}}>
-                        <CircularProgress size={80} thickness={5} style={{marginTop: '70px'}}/>
+                    <div style={styles.loading}>
+                        <CircularProgress size={80} thickness={5} style={{ marginTop: '70px' }} />
                     </div>
                 }
             </div>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import './VotingItemView.css';
-import SimpleButton from '../../common/SimpleButton';
+import VoteResultDialog from '../component/VoteResultDialog';
+
+// material-ui
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
@@ -10,7 +11,6 @@ import { callSmartContract, sendTransaction } from '../../common/dc/MessageDataC
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
-import VoteResultDialog from '../component/VoteResultDialog';
 
 class VotingItemView extends Component {
     constructor(props) {
@@ -47,6 +47,7 @@ class VotingItemView extends Component {
     render() {
         const cardStyle = {
             width: 'calc(100% - 40px)',
+            margin: '20px',
         }
         var { title, author, choices, timestamp, like } = this.props.votingItem;
         var theNumberOfVoters = 0;
@@ -54,8 +55,7 @@ class VotingItemView extends Component {
             theNumberOfVoters += choices[i][1].length;
         return (
             <div>
-                <Card className="VotingItemView-Card"
-                    style={cardStyle}>
+                <Card style={cardStyle}>
                     <CardHeader
                         title={title}
                         subtitle={author}
@@ -68,7 +68,7 @@ class VotingItemView extends Component {
                     </CardActions>
                     <CardText expandable={true}>
                         <Divider style={{ marginBottom: '20px' }} />
-                        <RadioButtonGroup name="choiceButtonGroup" defaultSelected="0">
+                        <RadioButtonGroup name="choiceButtonGroup">
                             {choices && choices.map((choice, index) =>
                                 <RadioButton
                                     key={index}
@@ -86,7 +86,7 @@ class VotingItemView extends Component {
                         <FlatButton label="delete" secondary={true} onClick={(() => { this.onDeleteButtonClicked(this.state.voteIndex); }).bind(this)} style={{ marginLeft: '10px' }} />
                     </CardText>
                 </Card>
-                <VoteResultDialog votingItem={this.props.votingItem} isOpenModal={this.state.isOpenResultModal} closeListener={this.onResultModalClosed.bind(this)}/>
+                <VoteResultDialog votingItem={this.props.votingItem} isOpenModal={this.state.isOpenResultModal} closeListener={this.onResultModalClosed.bind(this)} />
             </div>
         );
     }

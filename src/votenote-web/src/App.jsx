@@ -4,12 +4,9 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-import './App.css';
 import HeaderView from './main/view/HeaderView';
 import FooterView from './main/view/FooterView';
 import VotingListView from './main/view/VotingListView';
-import EnrollView from './main/view/EnrollView';
-import VoteView from './main/view/VoteView';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
@@ -25,9 +22,6 @@ class App extends Component {
           <HeaderView title="Votestagram"></HeaderView>
           <Switch>
             <Route exact={true} path="/" component={VotingListView} />
-            <Route path="/votinglist" component={VotingListView} />
-            <Route path="/enroll" component={EnrollView} />
-            <Route path="/vote/:id" component={VoteView} />
           </Switch>
           <FooterView />
         </div>

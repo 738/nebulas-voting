@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+
+// style
 import github from '../../img/github.png';
 import './FooterView.css';
 
