@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendTransaction } from '../../common/dc/MessageDataController';
+import ContractDataController from '../../common/dc/ContractDataController';
 
 // material-ui
 import FlatButton from 'material-ui/FlatButton';
@@ -25,16 +25,17 @@ export default class EnrollDialog extends React.Component {
             alert('fill the field');
             return;
         }
+        // TODO: choices 2개 이상 등록하도록...
+        if (this.state.choices.length < 2) {
+            alert('fill options at least 2');
+            return;
+        }
         var args = `[\"{\\\"title\\\": \\\"${this.state.title}\\\", \\\"author\\\": \\\"${this.state.author}\\\", \\\"choices\\\": [${this.state.choices.map(choice => `\\\"${choice}\\\"`).join(',')}]}\"]`;
-        sendTransaction('0', 'enroll', args, this.onEnrollTransactionFinished.bind(this));
+        ContractDataController.sendTransaction('0', 'enroll', args, this.onEnrollTransactionFinished.bind(this));
     }
 
     onEnrollTransactionFinished() {
-        this.props.history.push('/');
-    }
-
-    onBackButtonClicked() {
-        this.props.history.push('/');
+        window.location.reload();
     }
 
     onTitleChanged(e) {
@@ -90,13 +91,13 @@ export default class EnrollDialog extends React.Component {
             return;
         }
         var args = `[\"{\\\"title\\\": \\\"${this.state.title}\\\", \\\"author\\\": \\\"${this.state.author}\\\", \\\"choices\\\": [${this.state.choices.map(choice => `\\\"${choice}\\\"`).join(',')}]}\"]`;
-        sendTransaction('0', 'enroll', args, this.onEnrollTransactionFinished.bind(this));
+        ContractDataController.sendTransaction('0', 'enroll', args, this.onEnrollTransactionFinished.bind(this));
     }
 
     actions = [
         <FlatButton
             label="Cancel"
-            primary={true}
+            secondary={true}
             onClick={this.props.closeListener}
         />,
         <FlatButton

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import { callSmartContract } from '../../common/dc/MessageDataController';
+import ContractDataController from '../../common/dc/ContractDataController';
 import EnrollDialog from '../component/EnrollDialog';
 import VotingItemView from './VotingItemView';
 
@@ -24,7 +24,7 @@ class VotingListView extends Component {
     }
 
     fetchVotingList() {
-        callSmartContract("getVotingList", "", this.updateVotingList.bind(this));
+        ContractDataController.callSmartContract("getVotingList", "", this.updateVotingList.bind(this));
     }
 
     updateVotingList(tx) {

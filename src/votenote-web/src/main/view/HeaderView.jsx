@@ -9,7 +9,7 @@ class HeaderView extends Component {
     }
 
     onTitleClicked() {
-        this.props.history.push('/');
+        window.location.reload();
     }
 
     render() {

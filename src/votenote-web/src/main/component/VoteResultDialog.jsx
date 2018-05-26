@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import { sendTransaction } from '../../common/dc/MessageDataController';
 
 // material-ui
 import FlatButton from 'material-ui/FlatButton';

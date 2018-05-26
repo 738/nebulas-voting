@@ -7,7 +7,7 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
-import { callSmartContract, sendTransaction } from '../../common/dc/MessageDataController';
+import ContractDataController from '../../common/dc/ContractDataController';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
@@ -27,11 +27,11 @@ class VotingItemView extends Component {
             return;
         }
         const args = `[${this.props.votingItem.id}, ${index}]`
-        sendTransaction("", "vote", args, undefined);
+        ContractDataController.sendTransaction("", "vote", args, this.onRefresh.bind(this));
     }
 
     onDeleteButtonClicked() {
-        sendTransaction("", "delete", `[${this.props.votingItem.id}]`, undefined);
+        ContractDataController.sendTransaction("", "delete", `[${this.props.votingItem.id}]`, this.onRefresh.bind(this));
     }
 
     onRadioButtonClicked(index) {
@@ -43,6 +43,10 @@ class VotingItemView extends Component {
 
     onResultModalOpen = () => this.setState({ isOpenResultModal: true });
     onResultModalClosed = () => this.setState({ isOpenResultModal: false });
+
+    onRefresh() {
+        window.location.reload();
+    }
 
     render() {
         const cardStyle = {
