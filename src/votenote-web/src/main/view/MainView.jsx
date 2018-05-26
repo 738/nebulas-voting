@@ -1,5 +1,6 @@
 import React from 'react';
 import PendingDialog from '../component/PendingDialog';
+import MainDataController from '../../common/dc/MainDataController';
 
 // material-ui
 import Snackbar from 'material-ui/Snackbar';
@@ -41,13 +42,8 @@ class MainView extends React.Component {
     }
 
     onWalletInstallActionClicked() {
-        var filter = 'win16|win32|win64|mac|macintel';
-        if (navigator.platform) {
-            if (filter.indexOf(navigator.platform.toLowerCase()) < 0)
-                window.open('https://nano.nebulas.io/index_en.html');
-            else
-                window.open('https://github.com/ChengOrangeJu/WebExtensionWallet');
-        }
+        if (MainDataController.isMobile()) window.open('https://nano.nebulas.io/index_en.html');
+        else window.open('https://github.com/ChengOrangeJu/WebExtensionWallet');
     }
 
     onSnackbarOpen() {

@@ -1,6 +1,7 @@
 import React from 'react';
 import ContractDataController from '../../common/dc/ContractDataController';
 import MainView from '../view/MainView';
+import MainDataController from '../../common/dc/MainDataController';
 
 // material-ui
 import FlatButton from 'material-ui/FlatButton';
@@ -32,7 +33,7 @@ export default class EnrollDialog extends MainView {
             return;
         }
         // 지갑이 없으면 스낵바 오픈
-        if (window.webExtensionWallet === undefined) {
+        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) {
             this.onSnackbarOpen();
             return;
         }

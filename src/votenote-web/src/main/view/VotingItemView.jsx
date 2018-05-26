@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import VoteResultDialog from '../component/VoteResultDialog';
 import MainView from '../view/MainView';
+import MainDataController from '../../common/dc/MainDataController';
 
 // material-ui
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
@@ -29,7 +30,7 @@ class VotingItemView extends MainView {
             return;
         }
         // 지갑이 없으면 스낵바 오픈
-        if (window.webExtensionWallet === undefined) {
+        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) {
             this.onSnackbarOpen();
             return;
         }
@@ -39,7 +40,7 @@ class VotingItemView extends MainView {
 
     onDeleteButtonClicked() {
         // 지갑이 없으면 스낵바 오픈
-        if (window.webExtensionWallet === undefined) {
+        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) {
             this.onSnackbarOpen();
             return;
         }

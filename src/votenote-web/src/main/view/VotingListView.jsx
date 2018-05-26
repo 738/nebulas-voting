@@ -4,6 +4,7 @@ import ContractDataController from '../../common/dc/ContractDataController';
 import EnrollDialog from '../component/EnrollDialog';
 import VotingItemView from './VotingItemView';
 import MainView from './MainView';
+import MainDataController from '../../common/dc/MainDataController';
 
 // material-ui
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -23,7 +24,7 @@ class VotingListView extends MainView {
     componentDidMount() {
         this.fetchVotingList();
         // 월렛이 없다면 스낵바 띄움
-        if (window.webExtensionWallet === undefined) this.onSnackbarOpen();
+        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) this.onSnackbarOpen();
     }
 
     fetchVotingList() {
