@@ -2,7 +2,9 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
 import { sendTransaction } from '../../common/dc/MessageDataController';
 
 export default class EnrollDialog extends React.Component {
@@ -14,6 +16,7 @@ export default class EnrollDialog extends React.Component {
             choices: [''],
         }
     }
+    MAX_CHOICE = 5;
 
     onSubmitButtonClicked() {
         if (this.state.title === '' || this.state.author === '' || this.state.choices.some(value => !value)) {
@@ -69,6 +72,16 @@ export default class EnrollDialog extends React.Component {
         });
     }
 
+    onRemoveButtonClicked(index) {
+        this.setState({
+            ...this.state,
+            choices: [
+                ...this.state.choices.slice(0, index),
+                ...this.state.choices.slice(index + 1, this.state.choices.length)
+            ],
+        });
+    }
+
     onSubmitButtonClicked() {
         if (this.state.title === '' || this.state.author === '' || this.state.choices.some(value => !value)) {
             alert('fill the field');
@@ -91,8 +104,12 @@ export default class EnrollDialog extends React.Component {
         />,
     ];
     render() {
+        const customContentStyle = {
+            width: '90%',
+        };
         const customBodyStyle = {
-            overflowY: 'scroll'
+            overflowY: 'scroll',
+            overflowX: 'scroll'
         };
         return (
             <Dialog
@@ -101,11 +118,13 @@ export default class EnrollDialog extends React.Component {
                 modal={false}
                 open={this.props.isOpenModal}
                 onRequestClose={this.onModalClosed}
+                contentStyle={customContentStyle}
                 bodyStyle={customBodyStyle}>
                 <TextField
                     hintText="Title"
                     floatingLabelText="Title"
                     value={this.state.title}
+                    maxLength='35'
                     onChange={this.onTitleChanged.bind(this)}
                 />
                 <br />
@@ -113,6 +132,7 @@ export default class EnrollDialog extends React.Component {
                     hintText="Author"
                     floatingLabelText="Author"
                     value={this.state.author}
+                    maxLength='35'
                     onChange={this.onAuthorChanged.bind(this)}
                 />
                 <br />
@@ -123,11 +143,21 @@ export default class EnrollDialog extends React.Component {
                             floatingLabelText={`#${index + 1}`}
                             value={choice}
                             onChange={(e) => { this.onChoicesChanged(index, e) }}
+                            maxLength='35'
+                            style={{ width: '80%' }}
                         />
+                        {this.state.choices.length - 1 === index ?
+                            <IconButton onClick={this.onAddButtonClicked.bind(this)}>
+                                <ContentAdd />
+                            </IconButton>
+                            :
+                            <IconButton onClick={(() => {this.onRemoveButtonClicked(index)}).bind(this)}>
+                                <ContentRemove />
+                            </IconButton>
+                        }
                         <br />
                     </div>
                 )}
-                <RaisedButton onClick={this.onAddButtonClicked.bind(this)}>+</RaisedButton>
             </Dialog>
         );
     }

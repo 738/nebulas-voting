@@ -4,10 +4,22 @@ import './VotingItemView.css';
 import SimpleButton from '../../common/SimpleButton';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import { callSmartContract, sendTransaction } from '../../common/dc/MessageDataController';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
 
 class VotingItemView extends Component {
     constructor(props) {
         super(props);
+    }
+
+    onVoteButtonClicked(index) {
+        const { match: { params } } = this.props;
+        const args = `[${params.id}, ${index}]`
+        sendTransaction("", "vote", args, this.onVoteTransactionFinished.bind(this));
     }
 
     render() {
@@ -37,14 +49,31 @@ class VotingItemView extends Component {
                     showExpandableButton={true}
                 />
                 <CardActions>
-                    {moment(timestamp).format('LLL')}
-                    <Divider />
-                    {theNumberOfVoters} voters
+                    <FlatButton label={moment(timestamp).format('LLL')} />
+                    <FlatButton label={`${theNumberOfVoters} voters`} />
                     {/* <FlatButton label="vote" /> */}
                 </CardActions>
                 <CardText expandable={true}>
-                    <FlatButton label="vote" />
-
+                    <Divider style={{ marginBottom: '20px' }} />
+                    <RadioButtonGroup name="shipSpeed">
+                        {choices && choices.map((choice, index) =>
+                            // <div key={index}>
+                            //     <div className="VoteView-item">{choice[0]} {`(${choice[1]})`}</div>
+                            //     <div className="VoteView-vote-button" onClick={() => { this.onVoteButtonClicked(index); }}>vote</div>
+                            //     <br></br>
+                            // </div>
+                            <RadioButton
+                                key={index}
+                                value={choice[0]}
+                                label={choice[0]}
+                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                uncheckedIcon={<ActionFavoriteBorder />}
+                                style={{ marginBottom: 16 }}
+                            // style={styles.radioButton}
+                            />
+                        )}
+                    </RadioButtonGroup>
+                    <RaisedButton label="vote" primary={true} />
                 </CardText>
             </Card>
         );
