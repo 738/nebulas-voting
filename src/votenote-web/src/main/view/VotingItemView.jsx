@@ -14,12 +14,26 @@ import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
 class VotingItemView extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            voteIndex: -1,
+        }
     }
 
     onVoteButtonClicked(index) {
-        const { match: { params } } = this.props;
-        const args = `[${params.id}, ${index}]`
-        sendTransaction("", "vote", args, this.onVoteTransactionFinished.bind(this));
+        if (index < 0) {
+            alert('you must vote one item');
+            return;
+        }
+        const args = `[${this.props.votingItem.id}, ${index}]`
+        sendTransaction("", "vote", args, undefined);
+    }
+
+    onRadioButtonClicked(index) {
+        console.log(this.state.voteIndex);
+        this.setState({
+            ...this.state,
+            voteIndex: index,
+        });
     }
 
     render() {
@@ -31,15 +45,6 @@ class VotingItemView extends Component {
         for (var i = 0; i < choices.length; i++)
             theNumberOfVoters += choices[i][1].length;
         return (
-            // <div className="VotingItemView-Container">
-            //     <div className="VotingItemView-title">{title}</div>
-            //     <div className="VotingItemView-author">{author}</div>
-            //     <hr></hr>
-            //     <div className="VotingItemView-date">{moment(timestamp).format('LLL')}</div>
-            //     <div className="VotingItemView-voter">{theNumberOfVoters} voters</div>
-            //     {/* <button className="VotingItemView-voteButton" onClick={this.props.onVotingItemClicked}>Vote</button> */}
-            //     <button className="VotingItemView-voteButton" onClick={this.props.onVotingItemClicked}>vote</button>
-            // </div>
             <Card className="VotingItemView-Card"
                 style={cardStyle}>
                 <CardHeader
@@ -51,29 +56,23 @@ class VotingItemView extends Component {
                 <CardActions>
                     <FlatButton label={moment(timestamp).format('LLL')} />
                     <FlatButton label={`${theNumberOfVoters} voters`} />
-                    {/* <FlatButton label="vote" /> */}
                 </CardActions>
                 <CardText expandable={true}>
                     <Divider style={{ marginBottom: '20px' }} />
-                    <RadioButtonGroup name="shipSpeed">
+                    <RadioButtonGroup name="choiceButtonGroup" defaultSelected="0">
                         {choices && choices.map((choice, index) =>
-                            // <div key={index}>
-                            //     <div className="VoteView-item">{choice[0]} {`(${choice[1]})`}</div>
-                            //     <div className="VoteView-vote-button" onClick={() => { this.onVoteButtonClicked(index); }}>vote</div>
-                            //     <br></br>
-                            // </div>
                             <RadioButton
                                 key={index}
-                                value={choice[0]}
+                                value={index}
                                 label={choice[0]}
                                 checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                 uncheckedIcon={<ActionFavoriteBorder />}
                                 style={{ marginBottom: 16 }}
-                            // style={styles.radioButton}
+                                onClick={(() => { this.onRadioButtonClicked(index) }).bind(this)}
                             />
                         )}
                     </RadioButtonGroup>
-                    <RaisedButton label="vote" primary={true} />
+                    <RaisedButton label="vote" primary={true} onClick={(() => { this.onVoteButtonClicked(this.state.voteIndex); }).bind(this)} />
                 </CardText>
             </Card>
         );

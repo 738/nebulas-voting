@@ -45,11 +45,12 @@ class VotingListView extends Component {
     }
 
     render() {
-        const style = {
-            marginRight: 20,
-            position: 'fixed',
-            right: '20px',
-            bottom: '20px',
+        const styles = {
+            floatingActionButtonStyle: {
+                position: 'fixed',
+                right: '20px',
+                bottom: '20px',
+            }
         };
         return (
             <div className="VotingListView-Container">
@@ -60,7 +61,7 @@ class VotingListView extends Component {
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                             )}
                         </div>
-                        <FloatingActionButton style={style} onClick={this.onEnrollModalOpen.bind(this)}>
+                        <FloatingActionButton style={styles.floatingActionButtonStyle} onClick={this.onEnrollModalOpen.bind(this)}>
                             <ContentAdd />
                         </FloatingActionButton>
                         <EnrollDialog isOpenModal={this.state.isOpenEnrollModal} closeListener={this.onEnrollModalClosed.bind(this)}/>
