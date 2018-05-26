@@ -3,13 +3,14 @@ import { withRouter } from 'react-router-dom'
 import ContractDataController from '../../common/dc/ContractDataController';
 import EnrollDialog from '../component/EnrollDialog';
 import VotingItemView from './VotingItemView';
+import MainView from './MainView';
 
 // material-ui
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 
-class VotingListView extends Component {
+class VotingListView extends MainView {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +22,10 @@ class VotingListView extends Component {
 
     componentDidMount() {
         this.fetchVotingList();
+        // 월렛이 없다면 스낵바 띄움
+        if (window.webExtensionWallet === undefined) {
+            this.onSnackbarOpen();
+        }
     }
 
     fetchVotingList() {
@@ -38,7 +43,7 @@ class VotingListView extends Component {
     onEnrollModalOpen = () => this.setState({ isOpenEnrollModal: true });
     onEnrollModalClosed = () => this.setState({ isOpenEnrollModal: false });
 
-    render() {
+    renderBody() {
         const styles = {
             floatingActionButton: {
                 position: 'fixed',

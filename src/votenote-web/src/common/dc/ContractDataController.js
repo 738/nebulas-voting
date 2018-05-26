@@ -48,8 +48,8 @@ class ContractDataController {
         this.intervalId = setInterval(() => {
             this._queryPayInfo(successCallbackListener, failCallbackListener);
             this.intervalCount++;
-            console.log(this.intervalId);
-            console.log(this.intervalCount);
+            // console.log(this.intervalId);
+            // console.log(this.intervalCount);
             if (this.intervalCount > 6) {
                 clearInterval(this.intervalId);
                 this.intervalCount = 0;
