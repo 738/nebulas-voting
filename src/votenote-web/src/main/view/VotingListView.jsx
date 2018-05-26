@@ -24,7 +24,7 @@ class VotingListView extends MainView {
     componentDidMount() {
         this.fetchVotingList();
         // 월렛이 없다면 스낵바 띄움
-        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) this.onSnackbarOpen();
+        if (!MainDataController.isInstalledWallet()) this.onSnackbarOpen();
     }
 
     fetchVotingList() {

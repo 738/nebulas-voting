@@ -30,7 +30,7 @@ class VotingItemView extends MainView {
             return;
         }
         // 지갑이 없으면 스낵바 오픈
-        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) {
+        if (!MainDataController.isInstalledWallet()) {
             this.onSnackbarOpen();
             return;
         }
@@ -40,7 +40,7 @@ class VotingItemView extends MainView {
 
     onDeleteButtonClicked() {
         // 지갑이 없으면 스낵바 오픈
-        if (!MainDataController.isMobile() && window.webExtensionWallet === undefined) {
+        if (!MainDataController.isInstalledWallet()) {
             this.onSnackbarOpen();
             return;
         }
