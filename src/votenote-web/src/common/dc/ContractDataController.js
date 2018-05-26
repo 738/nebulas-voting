@@ -33,10 +33,13 @@ class ContractDataController {
     }
 
     // 트랜잭션 전송
-    sendTransaction(value, func, args, successCallbackListener = undefined, failCallbackListener = undefined) {
+    sendTransaction(value, func, args, pendingCallbackListener = undefined, successCallbackListener = undefined, failCallbackListener = undefined) {
         this.serialNumber = this.nebPay.call(dappAddress, value, func, args, {
             callback: this.callbackUrl,
-            listener: () => { this._checkPayInfo(successCallbackListener, failCallbackListener); },
+            listener: () => { 
+                pendingCallbackListener && pendingCallbackListener();
+                this._checkPayInfo(successCallbackListener, failCallbackListener);
+            },
         });
     }
 
@@ -45,6 +48,8 @@ class ContractDataController {
         this.intervalId = setInterval(() => {
             this._queryPayInfo(successCallbackListener, failCallbackListener);
             this.intervalCount++;
+            console.log(this.intervalId);
+            console.log(this.intervalCount);
             if (this.intervalCount > 6) {
                 clearInterval(this.intervalId);
                 this.intervalCount = 0;

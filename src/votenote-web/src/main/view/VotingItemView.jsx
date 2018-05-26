@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import VoteResultDialog from '../component/VoteResultDialog';
+import MainView from '../view/MainView';
 
 // material-ui
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
@@ -12,12 +13,13 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
 
-class VotingItemView extends Component {
+class VotingItemView extends MainView {
     constructor(props) {
         super(props);
         this.state = {
             voteIndex: -1,
             isOpenResultModal: false,
+            isOpenPendingModal: false,
         }
     }
 
@@ -27,11 +29,11 @@ class VotingItemView extends Component {
             return;
         }
         const args = `[${this.props.votingItem.id}, ${index}]`
-        ContractDataController.sendTransaction("", "vote", args, this.onRefresh.bind(this));
+        ContractDataController.sendTransaction("", "vote", args, this.onPendingModalOpen.bind(this), this.onTransactionSucceed.bind(this), this.onTransactionFailed.bind(this));
     }
 
     onDeleteButtonClicked() {
-        ContractDataController.sendTransaction("", "delete", `[${this.props.votingItem.id}]`, this.onRefresh.bind(this));
+        ContractDataController.sendTransaction("", "delete", `[${this.props.votingItem.id}]`, this.onPendingModalOpen.bind(this), this.onTransactionSucceed.bind(this), this.onTransactionFailed.bind(this));
     }
 
     onRadioButtonClicked(index) {
@@ -44,11 +46,7 @@ class VotingItemView extends Component {
     onResultModalOpen = () => this.setState({ isOpenResultModal: true });
     onResultModalClosed = () => this.setState({ isOpenResultModal: false });
 
-    onRefresh() {
-        window.location.reload();
-    }
-
-    render() {
+    renderBody() {
         const cardStyle = {
             width: 'calc(100% - 40px)',
             margin: '20px',
