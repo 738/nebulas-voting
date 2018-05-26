@@ -31,6 +31,11 @@ export default class EnrollDialog extends MainView {
             alert('fill options at least 2');
             return;
         }
+        // 지갑이 없으면 스낵바 오픈
+        if (window.webExtensionWallet === undefined) {
+            this.onSnackbarOpen();
+            return;
+        }
         var args = `[\"{\\\"title\\\": \\\"${this.state.title}\\\", \\\"author\\\": \\\"${this.state.author}\\\", \\\"choices\\\": [${this.state.choices.map(choice => `\\\"${choice}\\\"`).join(',')}]}\"]`;
         ContractDataController.sendTransaction('0', 'enroll', args, this.onPendingModalOpen.bind(this), this.onTransactionSucceed.bind(this), this.onTransactionFailed.bind(this));
     }

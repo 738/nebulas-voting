@@ -23,9 +23,7 @@ class VotingListView extends MainView {
     componentDidMount() {
         this.fetchVotingList();
         // 월렛이 없다면 스낵바 띄움
-        if (window.webExtensionWallet === undefined) {
-            this.onSnackbarOpen();
-        }
+        if (window.webExtensionWallet === undefined) this.onSnackbarOpen();
     }
 
     fetchVotingList() {
@@ -40,8 +38,19 @@ class VotingListView extends MainView {
         });
     }
 
-    onEnrollModalOpen = () => this.setState({ isOpenEnrollModal: true });
-    onEnrollModalClosed = () => this.setState({ isOpenEnrollModal: false });
+    onEnrollModalOpen() {
+        this.setState({
+            ...this.state,
+             isOpenEnrollModal: true,
+        });
+    }
+
+    onEnrollModalClosed(){
+        this.setState({
+            ...this.state,
+            isOpenEnrollModal: false
+        });
+    }
 
     renderBody() {
         const styles = {

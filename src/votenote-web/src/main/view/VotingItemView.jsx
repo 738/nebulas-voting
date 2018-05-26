@@ -28,11 +28,21 @@ class VotingItemView extends MainView {
             alert('you must vote one item');
             return;
         }
+        // 지갑이 없으면 스낵바 오픈
+        if (window.webExtensionWallet === undefined) {
+            this.onSnackbarOpen();
+            return;
+        }
         const args = `[${this.props.votingItem.id}, ${index}]`
         ContractDataController.sendTransaction("", "vote", args, this.onPendingModalOpen.bind(this), this.onTransactionSucceed.bind(this), this.onTransactionFailed.bind(this));
     }
 
     onDeleteButtonClicked() {
+        // 지갑이 없으면 스낵바 오픈
+        if (window.webExtensionWallet === undefined) {
+            this.onSnackbarOpen();
+            return;
+        }
         ContractDataController.sendTransaction("", "delete", `[${this.props.votingItem.id}]`, this.onPendingModalOpen.bind(this), this.onTransactionSucceed.bind(this), this.onTransactionFailed.bind(this));
     }
 
@@ -66,7 +76,7 @@ class VotingItemView extends MainView {
                     />
                     <CardActions>
                         <FlatButton label={moment(timestamp).format('LLL')} />
-                        <FlatButton label={`${theNumberOfVoters} voters`} />
+                        <FlatButton label={`${theNumberOfVoters} ${theNumberOfVoters > 1 ? 'voters' : 'voter'}`} />
                     </CardActions>
                     <CardText expandable={true}>
                         <Divider style={{ marginBottom: '20px' }} />

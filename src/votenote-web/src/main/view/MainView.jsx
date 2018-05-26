@@ -79,7 +79,7 @@ class MainView extends React.Component {
                     action="install"
                     autoHideDuration={5000}
                     onActionClick={this.onWalletInstallActionClicked.bind(this)}
-                    onRequestClose={this.handleRequestClose}
+                    onRequestClose={this.onSnackbarClosed.bind(this)}
                 />
             </div>
         );
