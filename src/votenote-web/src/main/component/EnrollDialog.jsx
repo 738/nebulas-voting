@@ -91,13 +91,17 @@ export default class EnrollDialog extends React.Component {
         />,
     ];
     render() {
+        const customBodyStyle = {
+            overflowY: 'scroll'
+        };
         return (
             <Dialog
                 title="Enroll Your Voting"
                 actions={this.actions}
                 modal={false}
                 open={this.props.isOpenModal}
-                onRequestClose={this.onModalClosed}>
+                onRequestClose={this.onModalClosed}
+                bodyStyle={customBodyStyle}>
                 <TextField
                     hintText="Title"
                     floatingLabelText="Title"
