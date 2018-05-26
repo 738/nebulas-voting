@@ -10,6 +10,7 @@ import FooterView from './main/view/FooterView';
 import VotingListView from './main/view/VotingListView';
 import EnrollView from './main/view/EnrollView';
 import VoteView from './main/view/VoteView';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <MuiThemeProvider>
         <div className="App">
           <HeaderView title="Votestagram"></HeaderView>
           <Switch>
@@ -29,6 +31,7 @@ class App extends Component {
           </Switch>
           <FooterView />
         </div>
+        </MuiThemeProvider>
       </Router>
     );
   }

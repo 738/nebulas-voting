@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import './EnrollView.css';
 import SimpleButton from '../../common/SimpleButton';
 import { sendTransaction } from '../../common/dc/MessageDataController';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 class EnrollView extends Component {
@@ -75,27 +77,35 @@ class EnrollView extends Component {
             <div className="EnrollView-Container">
                 <h1 className="EnrollView-title">Enroll a Voting</h1>
                 <div className="EnrollView-form">
-                    <div className="EnrollView-label">Title</div>
-                    <input className="EnrollView-input" type="text" maxLength="32" size="32" value={this.state.title} onChange={this.onTitleChanged.bind(this)}></input>
-                    <br></br>
-
-                    <div className="EnrollView-label">Author</div>
-                    <input className="EnrollView-input" type="text" maxLength="32" size="32" value={this.state.author} onChange={this.onAuthorChanged.bind(this)}></input>
-                    <br></br>
-
+                    <TextField
+                        hintText="Title"
+                        floatingLabelText="Title"
+                        value={this.state.author}
+                        onChange={this.onAuthorChanged.bind(this)}
+                    />
+                    <br />
+                    <TextField
+                        hintText="Author"
+                        floatingLabelText="Author"
+                        value={this.state.author}
+                        onChange={this.onAuthorChanged.bind(this)}
+                    />
+                    <br />
                     {this.state.choices.map((choice, index) =>
                         <div key={index}>
-                            <div className="EnrollView-label">Choice #{index + 1}</div>
-                            <input className="EnrollView-input" type="text" maxLength="32" size="32" value={choice} onChange={(e) => { this.onChoicesChanged(index, e) }}></input>
-                            <br></br>
+                            <TextField
+                                hintText={`#${index + 1}`}
+                                floatingLabelText={`#${index + 1}`}
+                                value={choice}
+                                onChange={(e) => { this.onChoicesChanged(index, e) }}
+                            />
+                            <br />
                         </div>
                     )}
-
-                    <div className="EnrollView-add-choices-button" onClick={this.onAddButtonClicked.bind(this)}>+</div>
+                    <RaisedButton onClick={this.onAddButtonClicked.bind(this)}>+</RaisedButton>
                     <br></br>
-
-                    <SimpleButton color="#FFCCBC" onClick={this.onSubmitButtonClicked.bind(this)}>submit</SimpleButton>
-                    <SimpleButton color="#FFFDE7" onClick={this.onBackButtonClicked.bind(this)}>back</SimpleButton>
+                    <RaisedButton onClick={this.onSubmitButtonClicked.bind(this)}>submit</RaisedButton>
+                    <RaisedButton onClick={this.onBackButtonClicked.bind(this)}>back</RaisedButton>
                 </div>
             </div>
         );

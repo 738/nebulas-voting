@@ -5,6 +5,10 @@ import VotingItemView from './VotingItemView';
 import SimpleButton from '../../common/SimpleButton';
 import logo from '../../img/logo.png';
 import { callSmartContract } from '../../common/dc/MessageDataController';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import FlatButton from 'material-ui/FlatButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import EnrollDialog from '../component/EnrollDialog';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -12,6 +16,7 @@ class VotingListView extends Component {
         this.state = {
             votingItems: [],
             isLoading: true,
+            isOpenEnrollModal: false,
         }
         this.onVotingItemClicked = this.onVotingItemClicked.bind(this);
     }
@@ -32,15 +37,17 @@ class VotingListView extends Component {
         });
     }
 
-    onErollButtonClicked() {
-        this.props.history.push('/enroll');
-    }
+    onEnrollModalOpen = () => this.setState({ isOpenEnrollModal: true });
+    onEnrollModalClosed = () => this.setState({ isOpenEnrollModal: false });
 
     onVotingItemClicked(id) {
         this.props.history.push(`/vote/${id}`);
     }
 
     render() {
+        const style = {
+            marginRight: 20,
+        };
         return (
             <div className="VotingListView-Container">
                 {!this.state.isLoading ?
@@ -51,7 +58,10 @@ class VotingListView extends Component {
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                             )}
                         </div>
-                        <SimpleButton color="#FFCCBC" onClick={this.onErollButtonClicked.bind(this)}>enroll</SimpleButton>
+                        <FloatingActionButton style={style} onClick={this.onEnrollModalOpen.bind(this)}>
+                            <ContentAdd />
+                        </FloatingActionButton>
+                        <EnrollDialog isOpenModal={this.state.isOpenEnrollModal} closeListener={this.onEnrollModalClosed.bind(this)}/>
                     </div>
                     :
                     <div className="VotingListView-loading">Loading...
