@@ -9,6 +9,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import EnrollDialog from '../component/EnrollDialog';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class VotingListView extends Component {
     constructor(props) {
@@ -67,8 +68,11 @@ class VotingListView extends Component {
                         <EnrollDialog isOpenModal={this.state.isOpenEnrollModal} closeListener={this.onEnrollModalClosed.bind(this)}/>
                     </div>
                     :
-                    <div className="VotingListView-loading">Loading...
-                        <div style={{ fontSize: '15px' }}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Mainnet</div>
+                    // <div className="VotingListView-loading">Loading...
+                    //     <div style={{ fontSize: '15px' }}>If it lasts more than 5 seconds, you should install <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> or set the network as Mainnet</div>
+                    // </div>
+                    <div style={{width: '100%', height: '600px', display: 'flex', alignItems: 'start', justifyContent: 'center'}}>
+                        <CircularProgress size={80} thickness={5} style={{marginTop: '70px'}}/>
                     </div>
                 }
             </div>

@@ -117,7 +117,7 @@ export default class EnrollDialog extends React.Component {
                 actions={this.actions}
                 modal={false}
                 open={this.props.isOpenModal}
-                onRequestClose={this.onModalClosed}
+                onRequestClose={this.props.closeListener}
                 contentStyle={customContentStyle}
                 bodyStyle={customBodyStyle}>
                 <TextField

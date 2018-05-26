@@ -1,6 +1,6 @@
 .HeaderView-Container {
     background-color: #6c5ce7;
-    height: 50px;
+    height: 60px;
     padding: 20px;
     color: white;
     text-align: center;
@@ -8,6 +8,8 @@
 
 .HeaderView-title {
     font-size: 3em;
+    padding-bottom: 10px;
     text-decoration: none;
     cursor: pointer;
+    font-family: 'Nanum Brush Script', cursive;
 }
