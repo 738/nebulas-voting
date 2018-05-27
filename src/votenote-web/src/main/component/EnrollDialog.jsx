@@ -2,6 +2,7 @@ import React from 'react';
 import ContractDataController from '../../common/dc/ContractDataController';
 import MainView from '../view/MainView';
 import MainDataController from '../../common/dc/MainDataController';
+import { translate } from "react-i18next";
 
 // material-ui
 import FlatButton from 'material-ui/FlatButton';
@@ -11,7 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 
-export default class EnrollDialog extends MainView {
+class EnrollDialog extends MainView {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,6 +21,7 @@ export default class EnrollDialog extends MainView {
             choices: [''],
             isOpenPendingModal: false,
         }
+        console.log('AA', this.props.i18n);
     }
     MAX_CHOICE = 5;
 
@@ -88,19 +90,8 @@ export default class EnrollDialog extends MainView {
         });
     }
 
-    actions = [
-        <FlatButton
-            label="Cancel"
-            secondary={true}
-            onClick={this.props.closeListener}
-        />,
-        <FlatButton
-            label="Enroll"
-            primary={true}
-            onClick={this.onSubmitButtonClicked.bind(this)}
-        />,
-    ];
     renderBody() {
+        const { t } = this.props;
         const customContentStyle = {
             width: '90%',
         };
@@ -108,27 +99,39 @@ export default class EnrollDialog extends MainView {
             overflowY: 'scroll',
             overflowX: 'scroll'
         };
+        const actions = [
+            <FlatButton
+                label={t('Cancel')}
+                secondary={true}
+                onClick={this.props.closeListener}
+            />,
+            <FlatButton
+                label={t('Enroll')}
+                primary={true}
+                onClick={this.onSubmitButtonClicked.bind(this)}
+            />,
+        ];
         return (
             <div>
                 <Dialog
-                    title="Enroll Your Voting"
-                    actions={this.actions}
+                    title={t('Enroll Your Voting')}
+                    actions={actions}
                     modal={false}
                     open={this.props.isOpenModal}
                     onRequestClose={this.props.closeListener}
                     contentStyle={customContentStyle}
                     bodyStyle={customBodyStyle}>
                     <TextField
-                        hintText="Title"
-                        floatingLabelText="Title"
+                        hintText={t('Title')}
+                        floatingLabelText={t('Title')}
                         value={this.state.title}
                         maxLength='35'
                         onChange={this.onTitleChanged.bind(this)}
                     />
                     <br />
                     <TextField
-                        hintText="Author"
-                        floatingLabelText="Author"
+                        hintText={t('Author')}
+                        floatingLabelText={t('Author')}
                         value={this.state.author}
                         maxLength='35'
                         onChange={this.onAuthorChanged.bind(this)}
@@ -161,3 +164,5 @@ export default class EnrollDialog extends MainView {
         );
     }
 }
+
+export default translate("translations")(EnrollDialog);

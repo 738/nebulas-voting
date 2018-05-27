@@ -3,6 +3,7 @@ import moment from 'moment';
 import VoteResultDialog from '../component/VoteResultDialog';
 import MainView from '../view/MainView';
 import MainDataController from '../../common/dc/MainDataController';
+import { translate } from "react-i18next";
 
 // material-ui
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
@@ -58,6 +59,7 @@ class VotingItemView extends MainView {
     onResultModalClosed = () => this.setState({ isOpenResultModal: false });
 
     renderBody() {
+        const { t } = this.props;
         const cardStyle = {
             width: 'calc(100% - 40px)',
             margin: '20px',
@@ -77,7 +79,7 @@ class VotingItemView extends MainView {
                     />
                     <CardActions>
                         <FlatButton label={moment(timestamp).format('LLL')} />
-                        <FlatButton label={`${theNumberOfVoters} ${theNumberOfVoters > 1 ? 'voters' : 'voter'}`} />
+                        <FlatButton label={`${theNumberOfVoters} ${theNumberOfVoters > 1 ? t('Voters') : t('Voter')}`} />
                     </CardActions>
                     <CardText expandable={true}>
                         <Divider style={{ marginBottom: '20px' }} />
@@ -94,9 +96,9 @@ class VotingItemView extends MainView {
                                 />
                             )}
                         </RadioButtonGroup>
-                        <RaisedButton label="vote" primary={true} onClick={(() => { this.onVoteButtonClicked(this.state.voteIndex); }).bind(this)} />
-                        <RaisedButton label="result" secondary={true} onClick={this.onResultModalOpen.bind(this)} style={{ marginLeft: '10px' }} />
-                        <FlatButton label="delete" secondary={true} onClick={(() => { this.onDeleteButtonClicked(this.state.voteIndex); }).bind(this)} style={{ marginLeft: '10px' }} />
+                        <RaisedButton label={t("Vote")} primary={true} onClick={(() => { this.onVoteButtonClicked(this.state.voteIndex); }).bind(this)} />
+                        <RaisedButton label={t("Result")} secondary={true} onClick={this.onResultModalOpen.bind(this)} style={{ marginLeft: '10px' }} />
+                        <FlatButton label={t("Delete")} secondary={true} onClick={(() => { this.onDeleteButtonClicked(this.state.voteIndex); }).bind(this)} style={{ marginLeft: '10px' }} />
                     </CardText>
                 </Card>
                 <VoteResultDialog votingItem={this.props.votingItem} isOpenModal={this.state.isOpenResultModal} closeListener={this.onResultModalClosed.bind(this)} />
@@ -105,4 +107,4 @@ class VotingItemView extends MainView {
     }
 }
 
-export default VotingItemView;
+export default translate("translations")(VotingItemView);

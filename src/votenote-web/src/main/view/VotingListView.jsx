@@ -42,11 +42,11 @@ class VotingListView extends MainView {
     onEnrollModalOpen() {
         this.setState({
             ...this.state,
-             isOpenEnrollModal: true,
+            isOpenEnrollModal: true,
         });
     }
 
-    onEnrollModalClosed(){
+    onEnrollModalClosed() {
         this.setState({
             ...this.state,
             isOpenEnrollModal: false

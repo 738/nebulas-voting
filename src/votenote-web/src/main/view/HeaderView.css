@@ -1,15 +1,23 @@
 .HeaderView-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #6c5ce7;
     height: 60px;
-    padding: 20px;
+    padding: 15px 0px;
     color: white;
     text-align: center;
 }
 
 .HeaderView-title {
+    display: inline-block;
     font-size: 3em;
-    padding-bottom: 10px;
     text-decoration: none;
     cursor: pointer;
     font-family: 'Nanum Brush Script', cursive;
+}
+
+.HeaderView-changeLanguage {
+    position: absolute!important;
+    right: 0px;
 }
