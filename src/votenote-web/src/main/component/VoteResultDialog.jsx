@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import { translate } from "react-i18next";
 
 // material-ui
 import FlatButton from 'material-ui/FlatButton';
@@ -9,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 
-export default class VoteResultDialog extends React.Component {
+class VoteResultDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,14 +25,14 @@ export default class VoteResultDialog extends React.Component {
         }
     }
 
-    actions = [
-        <FlatButton
-            label="Close"
-            primary={true}
-            onClick={this.props.closeListener}
-        />,
-    ];
     render() {
+        const actions = [
+            <FlatButton
+                label={this.props.t("Close")}
+                primary={true}
+                onClick={this.props.closeListener}
+            />,
+        ];
         const customContentStyle = {
             width: '90%',
         };
@@ -41,8 +42,8 @@ export default class VoteResultDialog extends React.Component {
         };
         return (
             <Dialog
-                title="Vote Result"
-                actions={this.actions}
+                title={this.props.t("Voting Result")}
+                actions={actions}
                 modal={false}
                 open={this.props.isOpenModal}
                 onRequestClose={this.props.closeListener}
@@ -53,3 +54,5 @@ export default class VoteResultDialog extends React.Component {
         );
     }
 }
+
+export default translate("translations")(VoteResultDialog);

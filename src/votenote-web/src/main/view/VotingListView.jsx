@@ -5,6 +5,7 @@ import EnrollDialog from '../component/EnrollDialog';
 import VotingItemView from './VotingItemView';
 import MainView from './MainView';
 import MainDataController from '../../common/dc/MainDataController';
+import { translate } from 'react-i18next';
 
 // material-ui
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -92,4 +93,4 @@ class VotingListView extends MainView {
     }
 }
 
-export default withRouter(VotingListView);
+export default translate("translations")(VotingListView);

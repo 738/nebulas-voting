@@ -20,7 +20,7 @@ class MainView extends React.Component {
     }
 
     onTransactionFailed() {
-        alert("Transaction is failed!");
+        alert(this.props.t("Transaction is failed!"));
         this.setState({
             ...this.state,
             isOpenPendingModal: false,
@@ -71,8 +71,8 @@ class MainView extends React.Component {
                 <PendingDialog isOpenModal={this.state.isOpenPendingModal} closeListener={this.onPendingModalClosed.bind(this)} />
                 <Snackbar
                     open={this.state.isOpenSnackbar}
-                    message={"You have to install Nebulas Wallet"}
-                    action="install"
+                    message={this.props.t("You have to install Nebulas Wallet")}
+                    action={this.props.t("install")}
                     autoHideDuration={5000}
                     onActionClick={this.onWalletInstallActionClicked.bind(this)}
                     onRequestClose={this.onSnackbarClosed.bind(this)}

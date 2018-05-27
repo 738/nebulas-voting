@@ -27,7 +27,7 @@ class VotingItemView extends MainView {
 
     onVoteButtonClicked(index) {
         if (index < 0) {
-            alert('you must vote one item');
+            alert(this.props.t('You must vote one item'));
             return;
         }
         // 지갑이 없으면 스낵바 오픈

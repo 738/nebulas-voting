@@ -21,17 +21,16 @@ class EnrollDialog extends MainView {
             choices: [''],
             isOpenPendingModal: false,
         }
-        console.log('AA', this.props.i18n);
     }
     MAX_CHOICE = 5;
 
     onSubmitButtonClicked() {
         if (this.state.title === '' || this.state.author === '' || this.state.choices.some(value => !value)) {
-            alert('fill the field');
+            alert(this.props.t('Fill The Field'));
             return;
         }
         if (this.state.choices.length < 2) {
-            alert('fill options at least 2');
+            alert(this.props.t('Fill Options at least 2'));
             return;
         }
         // 지갑이 없으면 스낵바 오픈
@@ -68,7 +67,7 @@ class EnrollDialog extends MainView {
 
     onAddButtonClicked() {
         if (this.state.choices.length >= this.MAX_CHOICE) {
-            alert('cannot add more than 5')
+            alert(this.props.t('You cannot add more than 5'));
             return;
         }
         this.setState({

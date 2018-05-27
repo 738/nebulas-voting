@@ -12,6 +12,7 @@
     "moment": "^2.22.1",
     "nebpay.js": "^0.1.0",
     "nebulas": "^0.5.0",
+    "query-string": "^6.1.0",
     "react": "^16.3.2",
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.3.2",
