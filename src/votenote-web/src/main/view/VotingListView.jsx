@@ -9,6 +9,7 @@ import { translate } from 'react-i18next';
 
 // material-ui
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import TextField from 'material-ui/TextField';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -19,6 +20,7 @@ class VotingListView extends MainView {
             votingItems: [],
             isLoading: true,
             isOpenEnrollModal: false,
+            searchVoting: '',
         }
     }
 
@@ -54,6 +56,13 @@ class VotingListView extends MainView {
         });
     }
 
+    onSearchVotingChanged(e) {
+        this.setState({
+            ...this.state,
+            title: e.target.value,
+        });
+    }
+
     renderBody() {
         const styles = {
             floatingActionButton: {
@@ -67,12 +76,25 @@ class VotingListView extends MainView {
                 display: 'flex',
                 alignItems: 'start',
                 justifyContent: 'center'
+            },
+            searchFieldWrapper: {
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
             }
         };
         return (
             <div className="VotingListView-Container">
                 {!this.state.isLoading ?
                     <div>
+                        <div style={styles.searchFieldWrapper}>
+                            <TextField
+                                hintText="Search Voting"
+                                style={{ width: '10', marginRight: '20px' }}
+                                value={this.state.searchVoting}
+                                onChange={this.onSearchVotingChanged.bind(this)}
+                            /> <br />
+                        </div>
                         <div>
                             {this.state.votingItems && this.state.votingItems.map((item, index) =>
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
