@@ -63,7 +63,7 @@ class ContractDataController {
             .then(res => {
                 var status = JSON.parse(res).data.status;
                 // tx: pending
-                if (status === 1 || status === 2) {
+                if (status === 1 || status === 0) {
                     if (this.intervalId) clearInterval(this.intervalId);
                     this.intervalCount = 0;
                 }
