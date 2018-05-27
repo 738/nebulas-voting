@@ -59,7 +59,7 @@ class VotingListView extends MainView {
     onSearchVotingChanged(e) {
         this.setState({
             ...this.state,
-            title: e.target.value,
+            searchVoting: e.target.value,
         });
     }
 
@@ -96,7 +96,11 @@ class VotingListView extends MainView {
                             /> <br />
                         </div>
                         <div>
-                            {this.state.votingItems && this.state.votingItems.map((item, index) =>
+                            {this.state.votingItems && this.state.votingItems
+                            .filter(item =>
+                                this.state.searchVoting === '' || item.title.toLowerCase().indexOf(this.state.searchVoting.toLowerCase()) >= 0
+                            )
+                            .map((item, index) =>
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
                             )}
                         </div>
