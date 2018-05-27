@@ -28,6 +28,8 @@ i18n.init({
                 "You have to install Nebulas Wallet": "You have to install Nebulas Wallet",
                 "install": "install",
                 "Refresh Now": "Refresh Now",
+                "Search Voting": "Search Voting",
+                "There is no voting": "There is no voting",
             }
         },
         zh: {
@@ -54,6 +56,8 @@ i18n.init({
                 "You have to install Nebulas Wallet": "您必须安装Nebulas钱包",
                 "install": "安装",
                 "Refresh Now": "立即刷新",
+                "Search Voting": "搜索投票",
+                "There is no voting": "没有投票权",
             }
         },
         ko: {
@@ -80,6 +84,8 @@ i18n.init({
                 "You have to install Nebulas Wallet": "네뷸러스 지갑을 설치해야 합니다",
                 "install": "설치",
                 "Refresh Now": "지금 새로고침하기",
+                "Search Voting": "투표 검색",
+                "There is no voting": "투표가 없습니다",
             }
         }
     },

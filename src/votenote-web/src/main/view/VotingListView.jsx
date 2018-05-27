@@ -10,6 +10,7 @@ import { translate } from 'react-i18next';
 // material-ui
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -64,7 +65,14 @@ class VotingListView extends MainView {
     }
 
     renderBody() {
+        const { votingItems, searchVoting } = this.state;
+        let votingItemsFiltered = votingItems && votingItems.filter(item =>
+            this.state.searchVoting === '' || item.title.toLowerCase().indexOf(this.state.searchVoting.toLowerCase()) >= 0 || item.author.toLowerCase().indexOf(this.state.searchVoting.toLowerCase()) >= 0
+        );
         const styles = {
+            container: {
+                height: 'calc(100% + 400px)',
+            },
             floatingActionButton: {
                 position: 'fixed',
                 right: '20px',
@@ -81,28 +89,38 @@ class VotingListView extends MainView {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
+            },
+            paperStyle: {
+                height: '200px',
+                width: 'calc(100% - 40px)',
+                margin: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
             }
         };
+
         return (
-            <div className="VotingListView-Container">
+            <div style={styles.container}>
                 {!this.state.isLoading ?
                     <div>
                         <div style={styles.searchFieldWrapper}>
                             <TextField
-                                hintText="Search Voting"
+                                hintText={this.props.t('Search Voting')}
                                 style={{ width: '10', marginRight: '20px' }}
                                 value={this.state.searchVoting}
                                 onChange={this.onSearchVotingChanged.bind(this)}
                             /> <br />
                         </div>
                         <div>
-                            {this.state.votingItems && this.state.votingItems
-                            .filter(item =>
-                                this.state.searchVoting === '' || item.title.toLowerCase().indexOf(this.state.searchVoting.toLowerCase()) >= 0
-                            )
-                            .map((item, index) =>
+                            {votingItemsFiltered.length > 0 ? votingItemsFiltered.map((item, index) =>
                                 <VotingItemView key={index} votingItem={item} onVotingItemClicked={() => { this.onVotingItemClicked(item.id); }}></VotingItemView>
-                            )}
+                            )
+                                :
+                                <Paper style={styles.paperStyle} zDepth={3}>
+                                    <div style={{fontSize: '24px'}}>{this.props.t('There is no voting')}</div>
+                                </Paper>
+                            }
                         </div>
                         <FloatingActionButton style={styles.floatingActionButton} onClick={this.onEnrollModalOpen.bind(this)}>
                             <ContentAdd />
