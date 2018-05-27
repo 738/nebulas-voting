@@ -11,12 +11,21 @@ class PendingDialog extends React.Component {
         super(props);
     }
 
+    onRefresh() {
+        window.location.reload();
+    }
+
     render() {
         const actions = [
             <FlatButton
                 label={this.props.t("Close")}
-                primary={true}
+                secondary={true}
                 onClick={this.props.closeListener}
+            />,
+            <FlatButton
+                label={this.props.t("Refresh Now")}
+                primary={true}
+                onClick={this.onRefresh.bind(this)}
             />,
         ];
         return (

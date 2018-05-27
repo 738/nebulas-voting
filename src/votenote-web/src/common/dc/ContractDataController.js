@@ -63,18 +63,16 @@ class ContractDataController {
             .then(res => {
                 var status = JSON.parse(res).data.status;
                 // tx: pending
-                if (status !== 2) {
+                if (status === 1 || status === 2) {
                     if (this.intervalId) clearInterval(this.intervalId);
                     this.intervalCount = 0;
                 }
                 // tx: succes
                 if (status === 1) {
-                    // console.log('tx success!!!!');
                     successCallbackListener && successCallbackListener();
                 }
                 // tx: fail
                 else if (status === 0) {
-                    // console.log('tx is failed');
                     failCallbackListener && failCallbackListener();
                 }
             })

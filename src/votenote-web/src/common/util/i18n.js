@@ -27,6 +27,7 @@ i18n.init({
                 "If your  transaction is succeed, it will be refreshed.": "If your  transaction is succeed, it will be refreshed.",
                 "You have to install Nebulas Wallet": "You have to install Nebulas Wallet",
                 "install": "install",
+                "Refresh Now": "Refresh Now",
             }
         },
         zh: {
@@ -52,6 +53,7 @@ i18n.init({
                 "If your  transaction is succeed, it will be refreshed.": "如果您的交易成功，它将被刷新。",
                 "You have to install Nebulas Wallet": "您必须安装Nebulas钱包",
                 "install": "安装",
+                "Refresh Now": "立即刷新",
             }
         },
         ko: {
@@ -77,6 +79,7 @@ i18n.init({
                 "If your  transaction is succeed, it will be refreshed.": "트랜잭션이 성공하면 새로고침됩니다.",
                 "You have to install Nebulas Wallet": "네뷸러스 지갑을 설치해야 합니다",
                 "install": "설치",
+                "Refresh Now": "지금 새로고침하기",
             }
         }
     },
