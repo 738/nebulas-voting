@@ -8,6 +8,8 @@
 ![votinglistview](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_votinglistview.png)
 
 ![voteview](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_voteview.png)
+
+![votingresult](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_votingresult.png)
 ## How to use
 1. enter https://votestagram.herokuapp.com/
 
