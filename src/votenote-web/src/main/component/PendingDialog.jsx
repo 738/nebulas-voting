@@ -36,7 +36,7 @@ class PendingDialog extends React.Component {
                 open={this.props.isOpenModal}
                 onRequestClose={this.props.closeListener}
                 bodyStyle={{textAlign: 'center'}}>
-                <p>{this.props.t("If your  transaction is succeed, it will be refreshed.")}</p>
+                <p>{this.props.t("If your transaction is succeed, it will be refreshed.")}</p>
                 <CircularProgress />
             </Dialog>
         );
