@@ -11,7 +11,7 @@
 
 ![votingresult](https://github.com/JonJee/nebulas-voting/blob/master/docs/img/capture_votingresult.png)
 ## How to use
-1. enter https://votestagram.herokuapp.com/
+1. enter https://vote.nasd.app
 
 2. you can see voting lists and enroll button.
 
